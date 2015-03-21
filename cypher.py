@@ -6,17 +6,16 @@ s = 'There once was a king who lived in castle. Every Monday the king would give
 
 def cypher(string, offset, len_char_set, char_set):
     """
-    see 
+    see cypher_interactive for documenation.
     """
     string = list(string.upper())
     num_offsets = len(offset)
     len_letters = len_char_set
     for index, char in enumerate(string):
-        offset_this_char = offset[index % num_offsets]
+        offset_this_char = offset[index % num_offsets]  # get the offset for this char
         char_index = char_set.find(char) + offset_this_char
-        char_index = char_index % len_letters
-        string[index] = char_set[char_index]
-        char_set[char_index]
+        char_index = char_index % len_letters  # where the new letter is found in char_set
+        string[index] = char_set[char_index]  # change char
     return ''.join(string)
 
 
@@ -65,5 +64,5 @@ def cypher_interactive(string='Hello World', offset=None, show_offset=True, decr
 
     return encrypted_string
 
-cypher_interactive(string=s, offset_max_length='auto')
+cypher_interactive(string=s)
 
