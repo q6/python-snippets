@@ -4,18 +4,20 @@ s = 'There once was a king who lived in castle. Every Monday the king would give
 # s = 'bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla'
 
 
-def cypher(s, offset_lst, len_char_set, char_set):
-    s = list(s.upper())
-    num_offsets = len(offset_lst)
+def cypher(string, offset, len_char_set, char_set):
+    """
+    see 
+    """
+    string = list(string.upper())
+    num_offsets = len(offset)
     len_letters = len_char_set
-    for index, char in enumerate(s):
-        offset = offset_lst[index % num_offsets]
-        char_index = char_set.find(char) + offset
+    for index, char in enumerate(string):
+        offset_this_char = offset[index % num_offsets]
+        char_index = char_set.find(char) + offset_this_char
         char_index = char_index % len_letters
-        s[index] = char_set[char_index]
-        # s[index]
+        string[index] = char_set[char_index]
         char_set[char_index]
-    return ''.join(s)
+    return ''.join(string)
 
 
 def cypher_interactive(string='Hello World', offset=None, show_offset=True, decrypt=True, offset_max_length=20, char_set=None):
