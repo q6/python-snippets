@@ -30,7 +30,7 @@ def cypher_interactive(string='Hello World', offset=None, show_offset=True, decr
     offset_max_length: Int. The number of random offsets generated. Default is 20.
     char_set: None or 'auto'. 'auto' to be implemented.
     """
-    chars_default = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ 1234567890.'  # default char list, not very comprehensive.
+    chars_default = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ 1234567890.,\''  # default char list, not very comprehensive.
 
     # get the char_set
     if char_set == None:
@@ -67,6 +67,7 @@ def cypher_interactive(string='Hello World', offset=None, show_offset=True, decr
 
     return encrypted_string
 
+s = input('Enter a string to encrypt. Only use letters space and period.\n')
 cypher_interactive(string=s, show_offset=True)
 # cypher_interactive(offset=[0, 0, 0, 1], string=s, show_offset=True)
 
