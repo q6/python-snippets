@@ -38,16 +38,19 @@ def cypher_interactive(string='Hello World', offset=None, show_offset=True, decr
         char_set = chars_default
 
     # if user wants 'auto' offset set the max length to length of string
-    print(type(offset_max_length))
     if offset_max_length == 'auto':  # offset length is as long as string itself, safest
         offset_max_length = len(string)
-    # generate a list of random offsets for encryption
-    len_char_set = len(char_set)
-    offset = [randrange(0, len_char_set+1) for i in range(offset_max_length)]  # +1 because randrange is exclusive
+
+    len_char_set = len(char_set)  # used for getting the index of the new letter
+
+    if offset == None:  # no offset list is specified, generate one
+        # generate a list of random offsets for encryption
+        offset = [randrange(0, len_char_set+1) for i in range(offset_max_length)]  # +1 because randrange is exclusive
+
 
 
     # show the offset to the user
-    if show_offset:
+    if show_offset == True:
         print(offset)
         print('')
 
@@ -64,5 +67,6 @@ def cypher_interactive(string='Hello World', offset=None, show_offset=True, decr
 
     return encrypted_string
 
-cypher_interactive(string=s)
+cypher_interactive(string=s, show_offset=True)
+# cypher_interactive(offset=[0, 0, 0, 1], string=s, show_offset=True)
 
