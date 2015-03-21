@@ -16,7 +16,7 @@ def cypher(s, offset_lst):
 
 
 letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ 1234567890.'
-print(len(letters))
+# print(len(letters))
 # n = int(input('Enter an int for the offset:\n'))
 n = [24, 3, 19, 36, 33, 5, 22]
 s = cypher(s, n)
