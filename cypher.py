@@ -38,7 +38,7 @@ def cypher_interactive(string='Hello World', offset=None, show_offset=True, decr
     chars_default = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ 1234567890.,\''  # default char list, not very comprehensive.
 
     # get the char_set
-    if char_set == None:
+    if char_set is None:
         # use default chars list
         char_set = chars_default
 
@@ -48,12 +48,12 @@ def cypher_interactive(string='Hello World', offset=None, show_offset=True, decr
 
     len_char_set = len(char_set)  # used for getting the index of the new letter
 
-    if offset == None:  # no offset list is specified, generate one
+    if offset is None:  # no offset list is specified, generate one
         # generate a list of random offsets for encryption
         offset = [randrange(0, len_char_set+1) for i in range(offset_max_length)]  # +1 because randrange is exclusive
 
     # show the offset to the user
-    if show_offset == True:
+    if show_offset:
         print(' '.join(str(i) for i in offset))
         print('')
 
@@ -73,4 +73,3 @@ def cypher_interactive(string='Hello World', offset=None, show_offset=True, decr
 # s = input('Enter a string to encrypt.\n')
 cypher_interactive(string=s, show_offset=True, offset_max_length='auto')
 # cypher_interactive(string=s, show_offset=True, offset_max_length=10)
-
