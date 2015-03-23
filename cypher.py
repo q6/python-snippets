@@ -70,6 +70,6 @@ def cypher_interactive(string='Hello World', offset=None, show_offset=True, decr
 
     return encrypted_string
 
-# s = input('Enter a string to encrypt.\n')
+# s = input('Enter a string to encrypt.\n')  # uncomment to allow user to enter a message
 cypher_interactive(string=s, show_offset=True, offset_max_length='auto')
 # cypher_interactive(string=s, show_offset=True, offset_max_length=10)
