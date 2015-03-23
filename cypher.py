@@ -1,7 +1,6 @@
 from random import randrange
 
-s = '0300: 12th Recon Squadron - We have encountered heavy resistance from the Germans.'
-# s = 'There once was a king who lived in castle. Every Monday the king would give a speech. Except this Monday. He had though it was Sunday.'
+s = 'There once was a king who lived in castle. Every Monday the king would give a speech. Except this Monday. He had though it was Sunday.'
 # s = 'bla bla bla bla bla bla bla'
 
 

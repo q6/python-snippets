@@ -28,5 +28,6 @@ def random_code_pattern(length=80):
 
 # guess_name('')
 # print(random_code_pattern())
-guess_name(random_code_pattern())
+# guess_name(random_code_pattern())
+guess_name('ADAM SCOTT')
 
