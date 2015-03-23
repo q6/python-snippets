@@ -1,12 +1,12 @@
 from random import randrange
 
 s = 'There once was a king who lived in castle. Every Monday the king would give a speech. Except this Monday. He had though it was Sunday.'
-# s = 'bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla'
+# s = 'bla bla bla bla bla bla bla'
 
 
 def cypher(string, offset, len_char_set, char_set):
     """
-    A script that uses a the ceaser cypher to encrypt text. Instead of
+    A script that uses the ceaser cypher to encrypt text. Instead of
     using the same offset for each letter, it uses a sequence of offsets.
     This sequence looks something like this [23, 43, 6], it can be any length
     greater than zero. If there are more then len(seq) chars in the test
@@ -14,7 +14,7 @@ def cypher(string, offset, len_char_set, char_set):
 
     see cypher_interactive for input documentation.
     """
-    string = list(string.upper())
+    string = list(string)
     num_offsets = len(offset)
     len_letters = len_char_set
     for index, char in enumerate(string):
@@ -34,10 +34,10 @@ def cypher_interactive(string='Hello World', offset=None, show_offset=True, decr
     offset: None or List. If None it will auto generate a list of random offsets with a max list length of 100. You can specify a offset or let have one generated for you.
     show_offset: Boolean. Show offset when running the command.
     decrypt: Boolean. Decrypt the message at runtime, used to verify the encryption. Will also print the decrypted message.
-    offset_max_length: Int. The number of random offsets generated. Default is 20.
-    char_set: None or 'auto'. 'auto' to be implemented.
+    offset_max_length: Int. The number of random offsets generated. Default is 20. Only used when no offset is provided
+    char_set: None or String. String of char that are in the message. see chars_default for an example.
     """
-    chars_default = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ 1234567890.,\''  # default char list, not very comprehensive.
+    chars_default = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ 1234567890.,\''  # default char list, not very comprehensive.
 
     # get the char_set
     if char_set is None:
@@ -56,7 +56,7 @@ def cypher_interactive(string='Hello World', offset=None, show_offset=True, decr
 
     # show the offset to the user
     if show_offset:
-        print(' '.join(str(i) for i in offset))
+        print(' '.join(str(i) for i in offset))  # [21, 4, 27] -> 21 4 27
         print('')
 
     # encrypt
@@ -64,7 +64,7 @@ def cypher_interactive(string='Hello World', offset=None, show_offset=True, decr
     print(encrypted_string)
 
     # decrypt
-    if decrypt:  # and False is debug
+    if decrypt:
         offset = [len_char_set-i for i in offset]  # to decrypt encrypt again
         decrypted_string = cypher(encrypted_string, offset, len_char_set, char_set)
         print('')
@@ -73,5 +73,5 @@ def cypher_interactive(string='Hello World', offset=None, show_offset=True, decr
     return encrypted_string
 
 # s = input('Enter a string to encrypt.\n')  # uncomment to allow user to enter a message
-cypher_interactive(string=s, show_offset=True, offset_max_length='auto')
+cypher_interactive(string=s, show_offset=True, offset_max_length=12)
 # cypher_interactive(string=s, show_offset=True, offset_max_length=10)
