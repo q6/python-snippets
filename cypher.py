@@ -9,8 +9,10 @@ def cypher(string, offset, len_char_set, char_set):
     A script that uses a the ceaser cypher to encrypt text. Instead of
     using the same offset for each letter, it uses a sequence of offsets.
     This sequence looks something like this [23, 43, 6], it can be any length
-    greater than zero.
-    see cypher_interactive for documentation.
+    greater than zero. If there are more then len(seq) chars in the test
+    than it will loop over the seq again.
+
+    see cypher_interactive for input documentation.
     """
     string = list(string.upper())
     num_offsets = len(offset)
