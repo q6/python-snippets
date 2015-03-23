@@ -1,6 +1,7 @@
 from random import randrange
 
-s = 'There once was a king who lived in castle. Every Monday the king would give a speech. Except this Monday. He had though it was Sunday.'
+s = '0300: 12th Recon Squadron - We have encountered heavy resistance from the Germans.'
+# s = 'There once was a king who lived in castle. Every Monday the king would give a speech. Except this Monday. He had though it was Sunday.'
 # s = 'bla bla bla bla bla bla bla'
 
 
@@ -37,7 +38,7 @@ def cypher_interactive(string='Hello World', offset=None, show_offset=True, decr
     offset_max_length: Int. The number of random offsets generated. Default is 20. Only used when no offset is provided
     char_set: None or String. String of char that are in the message. see chars_default for an example.
     """
-    chars_default = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ 1234567890.,\''  # default char list, not very comprehensive.
+    chars_default = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ 1234567890.,\':-'  # default char list, not very comprehensive.
 
     # get the char_set
     if char_set is None:
@@ -73,5 +74,5 @@ def cypher_interactive(string='Hello World', offset=None, show_offset=True, decr
     return encrypted_string
 
 # s = input('Enter a string to encrypt.\n')  # uncomment to allow user to enter a message
-cypher_interactive(string=s, show_offset=True, offset_max_length=12)
+cypher_interactive(string=s, show_offset=True, offset_max_length=20)
 # cypher_interactive(string=s, show_offset=True, offset_max_length=10)
