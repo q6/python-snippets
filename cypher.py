@@ -3,9 +3,12 @@ from random import randrange
 s = 'There once was a king who lived in castle. Every Monday the king would give a speech. Except this Monday. He had though it was Sunday.'
 # s = 'bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla'
 
-
 def cypher(string, offset, len_char_set, char_set):
     """
+    A script that uses a the ceaser cyhper to encrypt text. Instead of
+    using the same offset for each letter, it uses a sequence of offsets.
+    This sequence looks somehting like this [23, 43, 6], it can be any length
+    greater than zero.
     see cypher_interactive for documenation.
     """
     string = list(string.upper())
@@ -47,8 +50,6 @@ def cypher_interactive(string='Hello World', offset=None, show_offset=True, decr
         # generate a list of random offsets for encryption
         offset = [randrange(0, len_char_set+1) for i in range(offset_max_length)]  # +1 because randrange is exclusive
 
-
-
     # show the offset to the user
     if show_offset == True:
         print(offset)
@@ -67,7 +68,8 @@ def cypher_interactive(string='Hello World', offset=None, show_offset=True, decr
 
     return encrypted_string
 
-s = input('Enter a string to encrypt. Only use letters space and period.\n')
-cypher_interactive(string=s, show_offset=True)
+# s = input('Enter a string to encrypt. Only use letters space and period.\n')
+cypher_interactive(string=s, show_offset=True, offset_max_length='auto')
 # cypher_interactive(offset=[0, 0, 0, 1], string=s, show_offset=True)
+
 
