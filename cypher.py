@@ -3,13 +3,14 @@ from random import randrange
 s = 'There once was a king who lived in castle. Every Monday the king would give a speech. Except this Monday. He had though it was Sunday.'
 # s = 'bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla'
 
+
 def cypher(string, offset, len_char_set, char_set):
     """
-    A script that uses a the ceaser cyhper to encrypt text. Instead of
+    A script that uses a the ceaser cypher to encrypt text. Instead of
     using the same offset for each letter, it uses a sequence of offsets.
-    This sequence looks somehting like this [23, 43, 6], it can be any length
+    This sequence looks something like this [23, 43, 6], it can be any length
     greater than zero.
-    see cypher_interactive for documenation.
+    see cypher_interactive for documentation.
     """
     string = list(string.upper())
     num_offsets = len(offset)
@@ -25,6 +26,7 @@ def cypher(string, offset, len_char_set, char_set):
 def cypher_interactive(string='Hello World', offset=None, show_offset=True, decrypt=True, offset_max_length=20, char_set=None):
     """
     Lets the user run cypher interactively. Preferred method of using cypher()
+    Any character that is not in the chars_set will be encrypted as char_set[-1]
 
     string: String. A string to encrypt.
     offset: None or List. If None it will auto generate a list of random offsets with a max list length of 100. You can specify a offset or let have one generated for you.
@@ -52,7 +54,7 @@ def cypher_interactive(string='Hello World', offset=None, show_offset=True, decr
 
     # show the offset to the user
     if show_offset == True:
-        print(offset)
+        print(' '.join(str(i) for i in offset))
         print('')
 
     # encrypt
@@ -68,8 +70,7 @@ def cypher_interactive(string='Hello World', offset=None, show_offset=True, decr
 
     return encrypted_string
 
-# s = input('Enter a string to encrypt. Only use letters space and period.\n')
+# s = input('Enter a string to encrypt.\n')
 cypher_interactive(string=s, show_offset=True, offset_max_length='auto')
-# cypher_interactive(offset=[0, 0, 0, 1], string=s, show_offset=True)
-
+# cypher_interactive(string=s, show_offset=True, offset_max_length=10)
 
