@@ -9,7 +9,7 @@ def guess_name(name):
     for index, char in enumerate(name):
         for char_2 in letters:
             sleep(0.015)  # looks cool when it does it a bit slower
-            guess[index] = char_2 
+            guess[index] = char_2
             print(num)
             num += 1
             print(''.join(guess))
@@ -29,5 +29,5 @@ def random_code_pattern(length=80):
 # guess_name('')
 # print(random_code_pattern())
 # guess_name(random_code_pattern())
-guess_name('ADAM SCOTT')
+guess_name('THIS IS A DAY OF THE WEEK THAT IS NO ALLOWED TO WORK')
 

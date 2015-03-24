@@ -16,11 +16,10 @@ def cypher(string, offset, len_char_set, char_set):
     """
     string = list(string)
     num_offsets = len(offset)
-    len_letters = len_char_set
     for index, char in enumerate(string):
         offset_this_char = offset[index % num_offsets]  # get the offset for this char
         char_index = char_set.find(char) + offset_this_char
-        char_index = char_index % len_letters  # where the new letter is found in char_set
+        char_index = char_index % len_char_set  # where the new letter is found in char_set
         string[index] = char_set[char_index]  # change char
     return ''.join(string)
 
