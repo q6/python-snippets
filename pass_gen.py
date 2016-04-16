@@ -71,6 +71,7 @@ def take_out_exclude_characters(password_set, exclude_characters):
 def generate_passwords(password_numbers, length, set_for_password):
     # generate password from set for a certain number of times
     passwords = []
+    print(set_for_password)
     for p in range(password_numbers):
         password = ''
         # generate one password
@@ -83,7 +84,8 @@ def generate_passwords(password_numbers, length, set_for_password):
 def ask_user_parameters_and_generate():
     password_number = ask_user_password_number()
     password_length = ask_user_password_length()
-    password_sets = ask_user_char_sets()
+    user_desired_password_sets = ask_user_char_sets()
+    password_sets = generate_password_set(user_desired_password_sets)
     exclude_characters = ask_user_exclude_characters()
     password_sets = take_out_exclude_characters(password_sets, exclude_characters)
     generated_passwords = generate_passwords(password_number, password_length, password_sets)
