@@ -82,14 +82,15 @@ def take_out_exclude_characters(password_set, exclude_characters):
 
 def generate_passwords(password_quantity, password_length, password_set):
     # generate password from set for a certain number of times (quantity)
-    all_passwords = []
+    # all_passwords = []  # if you want to return all password uncomment this
     for p in range(password_quantity):
         password = ''
         # generate one password
         for i in range(password_length):
             password += choice(password_set)
-        all_passwords.append(password)
-    return '\n'.join(all_passwords)
+        print(password)  # comment if you want to return all passwords instead printing one by one
+        # all_passwords.append(password)  # uncomment if you want to return all password
+    # return '\n'.join(all_passwords)
 
 
 def ask_user_parameters_and_generate():
