@@ -20,7 +20,7 @@ def empty_to_new_value(var, new_value=1):
 
 def ask_user_password_quantity():
     # ask user how many passwords to generate
-    password_quantity = input('\nHow many password would you like to generate? (Press Enter to generate just 1)\n:')
+    password_quantity = input('\nHow many passwords would you like to generate? (Press Enter to generate just 1)\n:')
     password_quantity = empty_to_new_value(password_quantity)  # if no input set to 1
     password_quantity = int(password_quantity)  # is the user entered a number we have to convert from str to int
     return password_quantity
@@ -28,7 +28,7 @@ def ask_user_password_quantity():
 
 def ask_user_password_length():
     # ask user password length
-    password_length = input('\nHow long should the password be? (Press Enter to generate a 14 character one)\n:')
+    password_length = input('\nHow long should the password(s) be? (Press Enter to generate a 14 character one)\n:')
     password_length = empty_to_new_value(password_length, 12)  # if no input set to 12
     password_length = int(password_length)  # if the user entered something we have to convert str to int
     return password_length
