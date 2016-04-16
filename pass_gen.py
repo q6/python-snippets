@@ -13,6 +13,7 @@ chars_numbers = '1234567890'
 chars_alphabet_lower = 'abcdefghijklmnopqrstuwxyz'
 chars_alphabet_upper = 'ABCDEFGHIJKLMNOPQRSTUWXYZ'
 chars_special = '`~!@#$%^&*()-_=+\|]}[{";:/?.>,<*\'"'
+# add all sets together, will be used for determining what chars the password will be made of
 chars_sets = [chars_numbers, chars_alphabet_lower, chars_alphabet_upper, chars_special]
 
 
@@ -108,7 +109,6 @@ def ask_user_parameters_and_generate():
     print('\n', '='*38, sep='')
     print('\npassword generated from this set:', password_set, sep='\n')
     print('\nThe following characters were excluded:', exclude_characters, sep='\n')
-
 
 # Runs the password generator over again. Allows the user to quit/rerun after any generation.
 while True:
