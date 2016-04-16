@@ -1,5 +1,10 @@
-# this is a python script that will generate a single password
-# user can determine length, characters, exclude characters, how many passwords to generate
+"""
+                            PASSWORD GENERATOR
+This is a python script that will generate password(s).
+
+User can determine how many password to generate, length of password, what character the password will be made off,
+what characters to exclude from the password.
+"""
 
 from random import choice
 
