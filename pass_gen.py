@@ -59,7 +59,7 @@ def generate_character_set(user_char_sets):
 def ask_user_exclude_characters():
     # ask the user if they want to exclude any characters
     chars_exclude = input('\nAre there any character you want to exclude? (If no, press Enter.)\n:')
-    exclude_characters = ''.join(set(chars_exclude))  # remove dupes from string
+    exclude_characters = ''.join(sorted(set(chars_exclude)))  # remove dupes from string
     return exclude_characters
 
 
