@@ -24,7 +24,19 @@ def cypher(string, offset, len_char_set, char_set):
     return ''.join(string)
 
 
-def cypher_interactive(string='Hello World', offset=None, show_offset=True, decrypt=True, offset_max_length=20, char_set=None):
+def build_char_set_from_string(string):
+    """
+    A string of every character in another string. Ex. "Hello World" --> "Helo Wrld".
+    Useful because a string might have character in it that are not in cypher_interactive's chars_default. This will
+    enable users to encrypt any string.
+    """
+    chars_in_string = set()  # a set of characters in string. A set has no duplicates (python takes care of that)
+    for char in string:
+        chars_in_string.add(char)
+    return ''.join(chars_in_string)
+
+
+def cypher_interactive(string='Hello World', offset=None, show_offset=True, decrypt=True, offset_max_length=20, char_set='auto', show_char_set=True):
     """
     Lets the user run cypher interactively. Preferred method of using cypher()
     Any character that is not in the chars_set will be encrypted as char_set[-1]
@@ -39,9 +51,16 @@ def cypher_interactive(string='Hello World', offset=None, show_offset=True, decr
     chars_default = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ 1234567890.,\':-'  # default char list, not very comprehensive.
 
     # get the char_set
-    if char_set is None:
+    if char_set == 'auto':
+        char_set = build_char_set_from_string(string)  # build a char_set made up of input string
+    elif char_set is None:
         # use default chars list
         char_set = chars_default
+
+    # print out char_set
+    if show_char_set:
+        print('Character set')
+        print(char_set)
 
     # if user wants 'auto' offset set the max length to length of string
     if offset_max_length == 'auto':  # offset length is as long as string itself, safest
@@ -55,22 +74,24 @@ def cypher_interactive(string='Hello World', offset=None, show_offset=True, decr
 
     # show the offset to the user
     if show_offset:
+        print('\nOffset')
         print(' '.join(str(i) for i in offset))  # [21, 4, 27] -> 21 4 27
-        print('')
 
     # encrypt
     encrypted_string = cypher(string, offset, len_char_set, char_set)
+    print('\nEncrypted String')
     print(encrypted_string)
 
     # decrypt
     if decrypt:
         offset = [len_char_set-i for i in offset]  # to decrypt encrypt again
         decrypted_string = cypher(encrypted_string, offset, len_char_set, char_set)
-        print('')
+        print('\nDecrypted String')
         print(decrypted_string)
 
     return encrypted_string
 
 # s = input('Enter a string to encrypt.\n')  # uncomment to allow user to enter a message
-cypher_interactive(string=s, show_offset=True, offset_max_length=20)
+cypher_interactive(string=s, show_offset=True, offset_max_length='auto')
 # cypher_interactive(string=s, show_offset=True, offset_max_length=10)
+# print(build_char_set_from_string(s))
