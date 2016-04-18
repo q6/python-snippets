@@ -48,14 +48,10 @@ def cypher_interactive(string='Hello World', offset=None, show_offset=True, decr
     offset_max_length: Int. The number of random offsets generated. Default is 20. Only used when no offset is provided
     char_set: None or String. String of char that are in the message. see chars_default for an example.
     """
-    chars_default = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ 1234567890.,\':-'  # default char list, not very comprehensive.
 
     # get the char_set
     if char_set == 'auto':
         char_set = build_char_set_from_string(string)  # build a char_set made up of input string
-    elif char_set is None:
-        # use default chars list
-        char_set = chars_default
 
     # print out char_set
     if show_char_set:
