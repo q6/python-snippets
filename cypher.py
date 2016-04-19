@@ -1,7 +1,8 @@
 from random import randrange
+from random import shuffle
 
 s = 'There once was a king who lived in castle. Every Monday the king would give a speech. Except this Monday. He had though it was Sunday.'
-# s = 'bla bla bla bla bla bla bla'
+s = 'bla bla bla bla bla bla bla'
 
 
 def cypher(string, offset, len_char_set, char_set):
@@ -58,7 +59,7 @@ def add_spaces_to_sequence(str_or_list):
 def cypher_interactive(string='Hello World', offset='auto', char_set='auto', offset_max_length='auto', show_char_set=True, show_encrypt=True, show_decrypt=True, show_offset=True, no_print=False, return_type='list'):
     """
     Lets the user run cypher interactively. Preferred method of using cypher()
-    Any character that is not in the chars_set will be encrypted as char_set[-1]
+    Any character that is not in the char_set will be encrypted as char_set[-1]
 
     string: String. A string to encrypt.
     offset: 'auto' or list of ints. If 'auto' it will auto generate a list of random offsets. You can specify a offset or let have one generated for you.
@@ -71,6 +72,7 @@ def cypher_interactive(string='Hello World', offset='auto', char_set='auto', off
     no_print: Boolean. If True no print statement inside function will run. Simpler than putting False for all the show_bla
     return_type: 'list' or 'dict'. User picks their desired return type. Dictionary has keys but no order, list has only order
     """
+    chars_default = '`~!@#$%^&*()-_=+\|]}[{"\';:/?.>,<*abcdefghijklmnopqrstuwxyzABCDEFGHIJKLMNOPQRSTUWXYZ 1234567890 '
 
     # None of the print statements will print
     if no_print is True:
@@ -82,6 +84,8 @@ def cypher_interactive(string='Hello World', offset='auto', char_set='auto', off
     # get the char_set
     if char_set == 'auto':
         char_set = build_char_set_from_string(string)  # build a char_set made up of input string
+    else:
+        char_set = chars_default
 
     # print out char_set
     if show_char_set:
