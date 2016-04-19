@@ -37,29 +37,22 @@ def build_char_set_from_string(string):
 
 
 # helper function
-def add_spaces_to_string_sequence(string):
+def add_spaces_to_sequence(str_or_list):
     """
-    Takes a string and returns a string of characters where each character get space padding to a length of max_length
-    Ex. string='abde', 'max_length = len(str(len(string)))  # 'abc   def   ghi'  --> 15 --> 2 a  b  d  e'
-    string: a string Ex. 'dfasgfqwe'
-    """
-    max_length = len(str(len(string)))  # 'abc   def   ghi'  --> 15 --> 2
-    output = [c.rjust(max_length, ' ') for c in string]
-    output = ' '.join(output)
-    return output
+    Takes a string or list and returns a string of characters where each character get space padding to a length of max_length
+    str_or_list: a list of ints Ex. [21, 6, 7, 8, 0, 62]
+    str_or_list: a str Ex. 'abc   def   ghi'  # just a random str
 
+    Ex. string = 'abc   def   ghi'  --> 15 --> 2 a  b  d  e'
+    Ex. sequence_numbers = [21, 6, 7, 8, 0, 62] --> '21   6   7   8   0  62'
+    """
+    max_length = len(str(len(str_or_list)))  # 'abc   def   ghi'  --> 15 --> 2. Same for list and str
 
-# helper function
-def add_spaces_to_number_sequence(sequence_numbers):
-    """
-    Takes a number sequence and returns a string of characters where each character get space padding to a length of max_length
-    Ex. sequence_numbers=[21, 6, 7, 8, 0, 62] --> '21   6   7   8   0  62'
-    sequence_numbers: list of ints Ex. [21, 6, 7, 8, 0, 62]
-    """
-    max_length = len(str(len(sequence_numbers)))  # 'abc   def   ghi'  --> 15 --> 2
-    output = [''.join(str(i)).rjust(max_length, ' ') for i in sequence_numbers]
-    output = ' '.join(output)
-    return output
+    if type(str_or_list) == 'str':
+        output = [c.rjust(max_length, ' ') for c in str_or_list]
+    else:  # assume otherwise that it's a list
+        output = [''.join(str(i)).rjust(max_length, ' ') for i in str_or_list]
+    return ' '.join(output)  # convert list to str
 
 
 def cypher_interactive(string='Hello World', offset='auto', char_set='auto', offset_max_length='auto', show_char_set=True, show_encrypt=True, show_decrypt=True, show_offset=True, no_print=False, return_type='list'):
@@ -111,24 +104,24 @@ def cypher_interactive(string='Hello World', offset='auto', char_set='auto', off
     # show the offset to the user
     if show_offset:
         print('\nOffset')
-        print(add_spaces_to_number_sequence(range_len))
-        print(add_spaces_to_number_sequence(offset))
+        print(add_spaces_to_sequence(range_len))
+        print(add_spaces_to_sequence(offset))
 
     # encrypt
     encrypted_string = cypher(string, offset, len_char_set, char_set)
     if show_encrypt:
         print('\nEncrypted String')
         print()
-        print(add_spaces_to_number_sequence(range_len))
-        print(add_spaces_to_string_sequence(encrypted_string))
+        print(add_spaces_to_sequence(range_len))
+        print(add_spaces_to_sequence(encrypted_string))
 
     # show_decrypt, by default we don't decrypt because there is no point in returning the decrypted string
     if show_decrypt:
         offset = [len_char_set-i for i in offset]  # to show_decrypt encrypt again
         decrypted_string = cypher(encrypted_string, offset, len_char_set, char_set)
         print('\nDecrypted String')
-        print(add_spaces_to_number_sequence(range_len))
-        print(add_spaces_to_string_sequence(decrypted_string))
+        print(add_spaces_to_sequence(range_len))
+        print(add_spaces_to_sequence(decrypted_string))
 
     # two different ways to return the same data
     if return_type == 'list':
@@ -138,6 +131,6 @@ def cypher_interactive(string='Hello World', offset='auto', char_set='auto', off
 
 # s = 'Where to be today'
 # s = input('Enter a string to encrypt.\n')  # uncomment to allow user to enter a message
-print(cypher_interactive(string=s, no_print=True))
+print(cypher_interactive(string=s, no_print=False))
 # cypher_interactive(string=s, show_offset=True, offset_max_length=10)
 # print(build_char_set_from_string(s))
