@@ -37,6 +37,17 @@ def build_char_set_from_string(string):
     return ''.join(chars_in_string)
 
 
+def shuffle_string(string):
+    """
+    Takes a string and shuffles the order
+    Ex. 'monday' --> 'ondyam'
+    """
+    string = list(string)
+    shuffle(string)
+    string = ''.join(string)
+    return string
+
+
 # helper function
 def add_spaces_to_sequence(str_or_list):
     """
@@ -73,6 +84,7 @@ def cypher_interactive(string='Hello World', offset='auto', char_set='auto', off
     return_type: 'list' or 'dict'. User picks their desired return type. Dictionary has keys but no order, list has only order
     """
     chars_default = '`~!@#$%^&*()-_=+\|]}[{"\';:/?.>,<*abcdefghijklmnopqrstuwxyzABCDEFGHIJKLMNOPQRSTUWXYZ 1234567890 '
+    chars_default = shuffle_string(chars_default)  # shuffle the order of chars_default
 
     # None of the print statements will print
     if no_print is True:
@@ -135,6 +147,6 @@ def cypher_interactive(string='Hello World', offset='auto', char_set='auto', off
 
 # s = 'Where to be today'
 # s = input('Enter a string to encrypt.\n')  # uncomment to allow user to enter a message
-print(cypher_interactive(string=s, no_print=False))
+(cypher_interactive(string=s, no_print=False, char_set=''))
 # cypher_interactive(string=s, show_offset=True, offset_max_length=10)
 # print(build_char_set_from_string(s))
