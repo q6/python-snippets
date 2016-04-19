@@ -36,6 +36,32 @@ def build_char_set_from_string(string):
     return ''.join(chars_in_string)
 
 
+# helper function
+def add_spaces_to_string_sequence(string):
+    """
+    Takes a string and returns a string of characters where each character get space padding to a length of max_length
+    Ex. string='abde', 'max_length = len(str(len(string)))  # 'abc   def   ghi'  --> 15 --> 2 a  b  d  e'
+    string: a string Ex. 'dfasgfqwe'
+    """
+    max_length = len(str(len(string)))  # 'abc   def   ghi'  --> 15 --> 2
+    output = [c.rjust(max_length, ' ') for c in string]
+    output = ' '.join(output)
+    return output
+
+
+# helper function
+def add_spaces_to_number_sequence(sequence_numbers):
+    """
+    Takes a number sequence and returns a string of characters where each character get space padding to a length of max_length
+    Ex. sequence_numbers=[21, 6, 7, 8, 0, 62] --> '21   6   7   8   0  62'
+    sequence_numbers: list of ints Ex. [21, 6, 7, 8, 0, 62]
+    """
+    max_length = len(str(len(sequence_numbers)))  # 'abc   def   ghi'  --> 15 --> 2
+    output = [''.join(str(i)).rjust(max_length, ' ') for i in sequence_numbers]
+    output = ' '.join(output)
+    return output
+
+
 def cypher_interactive(string='Hello World', offset=None, show_offset=True, decrypt=True, offset_max_length=20, char_set='auto', show_char_set=True):
     """
     Lets the user run cypher interactively. Preferred method of using cypher()
@@ -68,25 +94,33 @@ def cypher_interactive(string='Hello World', offset=None, show_offset=True, decr
         # generate a list of random offsets for encryption
         offset = [randrange(0, len_char_set+1) for i in range(offset_max_length)]  # +1 because randrange is exclusive
 
+    # [1, 2, 3, 4, ...] for the length of the input string, will be used for printing. A simple index of chars
+    range_len = list(range(len(string)))
+
     # show the offset to the user
     if show_offset:
         print('\nOffset')
-        print(' '.join(str(i) for i in offset))  # [21, 4, 27] -> 21 4 27
+        print(add_spaces_to_number_sequence(range_len))
+        print(add_spaces_to_number_sequence(offset))
 
     # encrypt
     encrypted_string = cypher(string, offset, len_char_set, char_set)
     print('\nEncrypted String')
-    print(encrypted_string)
+    print()
+    print(add_spaces_to_number_sequence(range_len))
+    print(add_spaces_to_string_sequence(encrypted_string))
 
     # decrypt
     if decrypt:
         offset = [len_char_set-i for i in offset]  # to decrypt encrypt again
         decrypted_string = cypher(encrypted_string, offset, len_char_set, char_set)
         print('\nDecrypted String')
-        print(decrypted_string)
+        print(add_spaces_to_number_sequence(range_len))
+        print(add_spaces_to_string_sequence(decrypted_string))
 
     return encrypted_string
 
+# s = 'Where to be today'
 # s = input('Enter a string to encrypt.\n')  # uncomment to allow user to enter a message
 cypher_interactive(string=s, show_offset=True, offset_max_length='auto')
 # cypher_interactive(string=s, show_offset=True, offset_max_length=10)
