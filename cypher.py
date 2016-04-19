@@ -62,7 +62,7 @@ def add_spaces_to_number_sequence(sequence_numbers):
     return output
 
 
-def cypher_interactive(string='Hello World', offset='auto', char_set='auto', offset_max_length='auto', show_char_set=True, show_encrypt=True, show_decrypt=True, show_offset=True, no_print=False):
+def cypher_interactive(string='Hello World', offset='auto', char_set='auto', offset_max_length='auto', show_char_set=True, show_encrypt=True, show_decrypt=True, show_offset=True, no_print=False, return_type='list'):
     """
     Lets the user run cypher interactively. Preferred method of using cypher()
     Any character that is not in the chars_set will be encrypted as char_set[-1]
@@ -76,6 +76,7 @@ def cypher_interactive(string='Hello World', offset='auto', char_set='auto', off
     show_decrypt: Boolean. show_decrypt the message at runtime, used to verify the encryption. Will also print the show_decrypted message.
     show_offset: Boolean. Show offset when running the command.
     no_print: Boolean. If True no print statement inside function will run. Simpler than putting False for all the show_bla
+    return_type: 'list' or 'dict'. User picks their desired return type. Dictionary has keys but no order, list has only order
     """
 
     # None of the print statements will print
@@ -129,7 +130,11 @@ def cypher_interactive(string='Hello World', offset='auto', char_set='auto', off
         print(add_spaces_to_number_sequence(range_len))
         print(add_spaces_to_string_sequence(decrypted_string))
 
-    return {'Character Set': char_set, 'Offset': offset, 'Encrypted String': encrypted_string}  # return a dictionary of required information to decrypt message
+    # two different ways to return the same data
+    if return_type == 'list':
+        return [char_set, offset, encrypted_string]  # return a list of required information to decrypt message
+    else:
+        return {'Character Set': char_set, 'Offset': offset, 'Encrypted String': encrypted_string}  # return a dictionary of required information to decrypt message
 
 # s = 'Where to be today'
 # s = input('Enter a string to encrypt.\n')  # uncomment to allow user to enter a message
