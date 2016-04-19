@@ -69,7 +69,7 @@ def add_spaces_to_sequence(str_or_list):
     return ' '.join(output)  # convert list to str
 
 
-def cypher_interactive(string='Hello World', offset='auto', char_set='default', offset_max_length='auto', show_char_set=True, show_encrypt=True, show_decrypt=True, show_offset=True, no_print=False, return_type='list'):
+def cypher_interactive(string='Hello World', offset='auto', char_set='default', offset_max_length='auto', show_char_set=True, show_encrypt=True, show_decrypt=True, show_offset=True, no_print=False, verify_cypher=False, return_type='list'):
     """
     Lets the user run cypher interactively. Preferred method of using cypher()
     Any character that is not in the char_set will be encrypted as char_set[-1]
@@ -83,6 +83,7 @@ def cypher_interactive(string='Hello World', offset='auto', char_set='default', 
     show_decrypt: Boolean. show_decrypt the message at runtime, used to verify the encryption. Will also print the show_decrypted message.
     show_offset: Boolean. Show offset when running the command.
     no_print: Boolean. If True no print statement inside function will run. Simpler than putting False for all the show_bla
+    verify_cypher: Boolean. Does the decrypted message match the original input?
     return_type: 'list' or 'dict'. User picks their desired return type. Dictionary has keys but no order, list has only order
     """
     chars_default = '`~!@#$%^&()-_=+\|]}[{"\';:/?.>,<*abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 '
@@ -116,6 +117,7 @@ def cypher_interactive(string='Hello World', offset='auto', char_set='default', 
         show_decrypt = False
         show_char_set = False
         show_offset = False
+        verify_cypher = False
 
     # print out char_set
     if show_char_set:
@@ -143,6 +145,13 @@ def cypher_interactive(string='Hello World', offset='auto', char_set='default', 
         print(add_spaces_to_sequence(range_len))
         print(add_spaces_to_sequence(decrypted_string))
 
+    # check that the decrypted and original message are the same. Just to be sure they are indeed the same, which they really should be.
+    if verify_cypher:
+        if string == decrypted_string:
+            print('\nDecrypted matches original')
+        else:
+            print('\nDecrypted does NOT match original')
+
     # two different ways to return the same data
     if return_type == 'list':
         return [char_set, offset, encrypted_string]  # return a list of required information to decrypt message
@@ -151,6 +160,6 @@ def cypher_interactive(string='Hello World', offset='auto', char_set='default', 
 
 # s = 'Where to be today'
 # s = input('Enter a string to encrypt.\n')  # uncomment to allow user to enter a message
-(cypher_interactive(string=s, no_print=False, char_set=''))
+(cypher_interactive(string=s, no_print=False, char_set='', verify_cypher=True))
 # cypher_interactive(string=s, show_offset=True, offset_max_length=10)
 # print(build_char_set_from_string(s))
