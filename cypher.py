@@ -62,18 +62,28 @@ def add_spaces_to_number_sequence(sequence_numbers):
     return output
 
 
-def cypher_interactive(string='Hello World', offset=None, show_offset=True, decrypt=True, offset_max_length=20, char_set='auto', show_char_set=True):
+def cypher_interactive(string='Hello World', offset='auto', char_set='auto', offset_max_length='auto', show_char_set=True, show_encrypt=True, show_decrypt=True, show_offset=True, no_print=False):
     """
     Lets the user run cypher interactively. Preferred method of using cypher()
     Any character that is not in the chars_set will be encrypted as char_set[-1]
 
     string: String. A string to encrypt.
-    offset: None or List. If None it will auto generate a list of random offsets with a max list length of 100. You can specify a offset or let have one generated for you.
-    show_offset: Boolean. Show offset when running the command.
-    decrypt: Boolean. Decrypt the message at runtime, used to verify the encryption. Will also print the decrypted message.
+    offset: 'auto' or list of ints. If 'auto' it will auto generate a list of random offsets. You can specify a offset or let have one generated for you.
+    char_set: 'auto' or String. String of char that are in the message
     offset_max_length: Int. The number of random offsets generated. Default is 20. Only used when no offset is provided
-    char_set: None or String. String of char that are in the message. see chars_default for an example.
+    show_char_set: Boolean. Show the char_set which
+    show_encrypt: Boolean. Show encrypted string.
+    show_decrypt: Boolean. show_decrypt the message at runtime, used to verify the encryption. Will also print the show_decrypted message.
+    show_offset: Boolean. Show offset when running the command.
+    no_print: Boolean. If True no print statement inside function will run. Simpler than putting False for all the show_bla
     """
+
+    # None of the print statements will print
+    if no_print is True:
+        show_encrypt = False
+        show_decrypt = False
+        show_char_set = False
+        show_offset = False
 
     # get the char_set
     if char_set == 'auto':
@@ -90,7 +100,7 @@ def cypher_interactive(string='Hello World', offset=None, show_offset=True, decr
 
     len_char_set = len(char_set)  # used for getting the index of the new letter
 
-    if offset is None:  # no offset list is specified, generate one
+    if offset is 'auto':  # no offset list is specified, generate one
         # generate a list of random offsets for encryption
         offset = [randrange(0, len_char_set+1) for i in range(offset_max_length)]  # +1 because randrange is exclusive
 
@@ -105,23 +115,24 @@ def cypher_interactive(string='Hello World', offset=None, show_offset=True, decr
 
     # encrypt
     encrypted_string = cypher(string, offset, len_char_set, char_set)
-    print('\nEncrypted String')
-    print()
-    print(add_spaces_to_number_sequence(range_len))
-    print(add_spaces_to_string_sequence(encrypted_string))
+    if show_encrypt:
+        print('\nEncrypted String')
+        print()
+        print(add_spaces_to_number_sequence(range_len))
+        print(add_spaces_to_string_sequence(encrypted_string))
 
-    # decrypt
-    if decrypt:
-        offset = [len_char_set-i for i in offset]  # to decrypt encrypt again
+    # show_decrypt, by default we don't decrypt because there is no point in returning the decrypted string
+    if show_decrypt:
+        offset = [len_char_set-i for i in offset]  # to show_decrypt encrypt again
         decrypted_string = cypher(encrypted_string, offset, len_char_set, char_set)
         print('\nDecrypted String')
         print(add_spaces_to_number_sequence(range_len))
         print(add_spaces_to_string_sequence(decrypted_string))
 
-    return encrypted_string
+    return {'Character Set': char_set, 'Offset': offset, 'Encrypted String': encrypted_string}  # return a dictionary of required information to decrypt message
 
 # s = 'Where to be today'
 # s = input('Enter a string to encrypt.\n')  # uncomment to allow user to enter a message
-cypher_interactive(string=s, show_offset=True, offset_max_length='auto')
+print(cypher_interactive(string=s, no_print=True))
 # cypher_interactive(string=s, show_offset=True, offset_max_length=10)
 # print(build_char_set_from_string(s))
