@@ -1,5 +1,6 @@
 from random import randrange
 from random import shuffle
+from random import SystemRandom
 
 s = 'There once was a king who lived in castle. Every Monday the king would give a speech. Except this Monday. He had though it was Sunday.'
 s = 'bla bla bla bla bla bla bla'
@@ -43,7 +44,7 @@ def shuffle_string(string):
     Ex. 'monday' --> 'ondyam'
     """
     string = list(string)
-    shuffle(string)
+    SystemRandom().shuffle(string)
     string = ''.join(string)
     return string
 
@@ -112,7 +113,7 @@ def cypher_interactive(string='Hello World', offset='auto', char_set='auto', off
 
     if offset is 'auto':  # no offset list is specified, generate one
         # generate a list of random offsets for encryption
-        offset = [randrange(0, len_char_set+1) for i in range(offset_max_length)]  # +1 because randrange is exclusive
+        offset = [SystemRandom().randrange(0, len_char_set+1) for i in range(offset_max_length)]  # +1 because randrange is exclusive
 
     # [1, 2, 3, 4, ...] for the length of the input string, will be used for printing. A simple index of chars
     range_len = list(range(len(string)))
