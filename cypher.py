@@ -4,7 +4,7 @@ from random import SystemRandom
 
 s = 'There once was a king who lived in castle. Every Monday the king would give a speech. Except this Monday. He had though it was Sunday.'
 # s = 'bla bla bla bla bla bla bla'
-s = 'The worst is when it rains.'
+# s = 'The worst is when it rains. Summer heat at it\'s best'
 
 
 def cypher(string, offset, len_char_set, char_set):
@@ -85,7 +85,7 @@ def cypher_interactive(string='Hello World', offset='auto', char_set='default', 
     no_print: Boolean. If True no print statement inside function will run. Simpler than putting False for all the show_bla
     return_type: 'list' or 'dict'. User picks their desired return type. Dictionary has keys but no order, list has only order
     """
-    chars_default = '`~!@#$%^&*()-_=+\|]}[{"\';:/?.>,<*abcdefghijklmnopqrstuwxyzABCDEFGHIJKLMNOPQRSTUWXYZ 1234567890 '
+    chars_default = '`~!@#$%^&()-_=+\|]}[{"\';:/?.>,<*abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 '
     chars_default = shuffle_string(chars_default)  # shuffle the order of chars_default
 
     # get the char_set
