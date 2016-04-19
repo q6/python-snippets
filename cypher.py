@@ -3,7 +3,8 @@ from random import shuffle
 from random import SystemRandom
 
 s = 'There once was a king who lived in castle. Every Monday the king would give a speech. Except this Monday. He had though it was Sunday.'
-s = 'bla bla bla bla bla bla bla'
+# s = 'bla bla bla bla bla bla bla'
+s = 'The worst is when it rains.'
 
 
 def cypher(string, offset, len_char_set, char_set):
@@ -68,7 +69,7 @@ def add_spaces_to_sequence(str_or_list):
     return ' '.join(output)  # convert list to str
 
 
-def cypher_interactive(string='Hello World', offset='auto', char_set='auto', offset_max_length='auto', show_char_set=True, show_encrypt=True, show_decrypt=True, show_offset=True, no_print=False, return_type='list'):
+def cypher_interactive(string='Hello World', offset='auto', char_set='default', offset_max_length='auto', show_char_set=True, show_encrypt=True, show_decrypt=True, show_offset=True, no_print=False, return_type='list'):
     """
     Lets the user run cypher interactively. Preferred method of using cypher()
     Any character that is not in the char_set will be encrypted as char_set[-1]
@@ -87,23 +88,11 @@ def cypher_interactive(string='Hello World', offset='auto', char_set='auto', off
     chars_default = '`~!@#$%^&*()-_=+\|]}[{"\';:/?.>,<*abcdefghijklmnopqrstuwxyzABCDEFGHIJKLMNOPQRSTUWXYZ 1234567890 '
     chars_default = shuffle_string(chars_default)  # shuffle the order of chars_default
 
-    # None of the print statements will print
-    if no_print is True:
-        show_encrypt = False
-        show_decrypt = False
-        show_char_set = False
-        show_offset = False
-
     # get the char_set
     if char_set == 'auto':
         char_set = build_char_set_from_string(string)  # build a char_set made up of input string
-    else:
+    else:  # when set to something other than 'auto', aka 'default'
         char_set = chars_default
-
-    # print out char_set
-    if show_char_set:
-        print('Character set')
-        print(char_set)
 
     # if user wants 'auto' offset set the max length to length of string
     if offset_max_length == 'auto':  # offset length is as long as string itself, safest
@@ -115,8 +104,23 @@ def cypher_interactive(string='Hello World', offset='auto', char_set='auto', off
         # generate a list of random offsets for encryption
         offset = [SystemRandom().randrange(0, len_char_set+1) for i in range(offset_max_length)]  # +1 because randrange is exclusive
 
-    # [1, 2, 3, 4, ...] for the length of the input string, will be used for printing. A simple index of chars
+    # List, [1, 2, 3, 4, ...] for the length of the input string, will be used for printing. A simple index of chars
     range_len = list(range(len(string)))
+
+    # encrypt
+    encrypted_string = cypher(string, offset, len_char_set, char_set)
+
+    # None of the print statements will print
+    if no_print is True:
+        show_encrypt = False
+        show_decrypt = False
+        show_char_set = False
+        show_offset = False
+
+    # print out char_set
+    if show_char_set:
+        print('Character set')
+        print(char_set)
 
     # show the offset to the user
     if show_offset:
@@ -124,15 +128,14 @@ def cypher_interactive(string='Hello World', offset='auto', char_set='auto', off
         print(add_spaces_to_sequence(range_len))
         print(add_spaces_to_sequence(offset))
 
-    # encrypt
-    encrypted_string = cypher(string, offset, len_char_set, char_set)
+    # show encrypted string
     if show_encrypt:
         print('\nEncrypted String')
         print()
         print(add_spaces_to_sequence(range_len))
         print(add_spaces_to_sequence(encrypted_string))
 
-    # show_decrypt, by default we don't decrypt because there is no point in returning the decrypted string
+    # show_decrypt, by default we don't decrypt because there is no point in returning the decrypted string, only used for printing
     if show_decrypt:
         offset = [len_char_set-i for i in offset]  # to show_decrypt encrypt again
         decrypted_string = cypher(encrypted_string, offset, len_char_set, char_set)
