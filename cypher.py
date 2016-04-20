@@ -2,7 +2,7 @@ from random import SystemRandom
 
 s = 'There once was a king who lived in castle. Every Monday the king would give a speech. Except this Monday. He had thought it was Sunday.'
 # s = 'bla bla bla bla bla bla bla'
-# s = 'The worst is when it rains. Summer heat at it\'s best'
+s = 'The worst is when it rains. Summer heat at it\'s best'
 
 
 def cypher(string, offset, char_set):
@@ -16,14 +16,16 @@ def cypher(string, offset, char_set):
     see cypher_interactive for input documentation.
 
     string: str Ex. 'Hello World'
-    char_set: list of ints Ex. [2, 32, 5]
+    offset: list of ints Ex. [2, 32, 5]
+    char_set: str Ex. 'abcdefghijklmnopqrstuwxyz'
     """
     len_char_set = len(char_set)
     string = list(string)
     num_offsets = len(offset)
     for index, char in enumerate(string):
-        offset_this_char = offset[index % num_offsets]  # get the offset for this char
-        char_index = char_set.find(char) + offset_this_char
+        offset_this_char = offset[index % num_offsets]  # get the offset that will be used for this char, comes from offset
+        char_index = char_set.find(char) + offset_this_char  # the index at which the encrypted is found in char_set that is if char_set was looping indefinitely
+        # which it doesn't, so we need to go back to the beginning and go form there)
         char_index = char_index % len_char_set  # where the new letter is found in char_set
         string[index] = char_set[char_index]  # change char
     return ''.join(string)
@@ -136,7 +138,6 @@ def cypher_interactive(string='Hello World', offset='auto', char_set='default', 
     # show encrypted string
     if show_encrypt:
         print('\nEncrypted String')
-        print()
         print(add_spaces_to_sequence(range_len))
         print(add_spaces_to_sequence(encrypted_string))
 
