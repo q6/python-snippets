@@ -5,16 +5,20 @@ s = 'There once was a king who lived in castle. Every Monday the king would give
 # s = 'The worst is when it rains. Summer heat at it\'s best'
 
 
-def cypher(string, offset, len_char_set, char_set):
+def cypher(string, offset, char_set):
     """
     A script that uses the ceaser cypher to encrypt text. Instead of
     using the same offset for each letter, it uses a sequence of offsets.
     This sequence looks something like this [23, 43, 6], it can be any length
-    greater than zero. If there are more then len(seq) chars in the test
+    greater than zero. If the string is longer than len(offset)
     than it will loop over the seq again.
 
     see cypher_interactive for input documentation.
+
+    string: str Ex. 'Hello World'
+    char_set: list of ints Ex. [2, 32, 5]
     """
+    len_char_set = len(char_set)
     string = list(string)
     num_offsets = len(offset)
     for index, char in enumerate(string):
@@ -108,7 +112,7 @@ def cypher_interactive(string='Hello World', offset='auto', char_set='default', 
     range_len = list(range(len(string)))
 
     # encrypt
-    encrypted_string = cypher(string, offset, len_char_set, char_set)
+    encrypted_string = cypher(string, offset, char_set)
 
     # None of the print statements will print
     if no_print is True:
@@ -139,7 +143,7 @@ def cypher_interactive(string='Hello World', offset='auto', char_set='default', 
     # show_decrypt, by default we don't decrypt because there is no point in returning the decrypted string, only used for printing
     if show_decrypt:
         offset = [len_char_set-i for i in offset]  # to show_decrypt encrypt again
-        decrypted_string = cypher(encrypted_string, offset, len_char_set, char_set)
+        decrypted_string = cypher(encrypted_string, offset, char_set)
         print('\nDecrypted String')
         print(add_spaces_to_sequence(range_len))
         print(add_spaces_to_sequence(decrypted_string))
@@ -162,6 +166,6 @@ def cypher_interactive(string='Hello World', offset='auto', char_set='default', 
 
 # s = 'Where to be today'
 # s = input('Enter a string to encrypt.\n')  # uncomment to allow user to enter a message
-(cypher_interactive(string=s, no_print=False, char_set='', verify_cypher=True))
+(cypher_interactive(string=s, no_print=False, char_set='', verify_cypher=False))
 # cypher_interactive(string=s, show_offset=True, offset_max_length=10)
 # print(build_char_set_from_string(s))
