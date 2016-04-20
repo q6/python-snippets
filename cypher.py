@@ -5,7 +5,7 @@ s = 'There once was a king who lived in castle. Every Monday the king would give
 s = 'The worst is when it rains. Summer heat at it\'s best'
 
 
-def cypher(string, offset, char_set):
+def encrypt_string(string, offset, char_set):
     """
     A script that uses the ceaser cypher to encrypt text. Instead of
     using the same offset for each letter, it uses a sequence of offsets.
@@ -74,7 +74,7 @@ def add_spaces_to_sequence(str_or_list):
     return ' '.join(output)  # convert list to str
 
 
-def cypher_interactive(string='Hello World', offset='auto', char_set='default', offset_max_length='auto', show_char_set=True, show_encrypt=True, show_decrypt=True, show_offset=True, no_print=False, verify_cypher=False, return_type='list'):
+def caeser_cypher(string='Hello World', offset='auto', char_set='default', offset_max_length='auto', show_char_set=True, show_encrypt=True, show_decrypt=True, show_offset=True, no_print=False, verify_cypher=False, return_type='list'):
     """
     Lets the user run cypher interactively. Preferred method of using cypher()
     Any character that is not in the char_set will be encrypted as char_set[-1]
@@ -114,7 +114,7 @@ def cypher_interactive(string='Hello World', offset='auto', char_set='default', 
     range_len = list(range(len(string)))
 
     # encrypt
-    encrypted_string = cypher(string, offset, char_set)
+    encrypted_string = encrypt_string(string, offset, char_set)
 
     # None of the print statements will print
     if no_print is True:
@@ -144,7 +144,7 @@ def cypher_interactive(string='Hello World', offset='auto', char_set='default', 
     # show_decrypt, by default we don't decrypt because there is no point in returning the decrypted string, only used for printing
     if show_decrypt:
         offset = [len_char_set-i for i in offset]  # to show_decrypt encrypt again
-        decrypted_string = cypher(encrypted_string, offset, char_set)
+        decrypted_string = encrypt_string(encrypted_string, offset, char_set)
         print('\nDecrypted String')
         print(add_spaces_to_sequence(range_len))
         print(add_spaces_to_sequence(decrypted_string))
@@ -165,8 +165,5 @@ def cypher_interactive(string='Hello World', offset='auto', char_set='default', 
     else:
         return {'Character Set': char_set, 'Offset': offset, 'Encrypted String': encrypted_string}  # return a dictionary of required information to decrypt message
 
-# s = 'Where to be today'
-# s = input('Enter a string to encrypt.\n')  # uncomment to allow user to enter a message
-(cypher_interactive(string=s, no_print=False, char_set='', verify_cypher=False))
-# cypher_interactive(string=s, show_offset=True, offset_max_length=10)
-# print(build_char_set_from_string(s))
+# (cypher_interactive(string=s, no_print=False, char_set='', verify_cypher=False))
+(caeser_cypher(string='CAESER CYPHER', offset=[3, 6, 2], no_print=False, char_set='ABCDEFGHIJKLMNOPQRSTUVWXYZ ', verify_cypher=True))
