@@ -1,8 +1,6 @@
-from random import randrange
-from random import shuffle
 from random import SystemRandom
 
-s = 'There once was a king who lived in castle. Every Monday the king would give a speech. Except this Monday. He had though it was Sunday.'
+s = 'There once was a king who lived in castle. Every Monday the king would give a speech. Except this Monday. He had thought it was Sunday.'
 # s = 'bla bla bla bla bla bla bla'
 # s = 'The worst is when it rains. Summer heat at it\'s best'
 
@@ -151,6 +149,8 @@ def cypher_interactive(string='Hello World', offset='auto', char_set='default', 
             print('\nDecrypted matches original')
         else:
             print('\nDecrypted does NOT match original')
+        print('\nOriginal: ' + string)
+        print('Decrypted:' + decrypted_string)
 
     # two different ways to return the same data
     if return_type == 'list':
