@@ -13,22 +13,22 @@ def cypher(string, offset, char_set):
     greater than zero. If the string is longer than len(offset)
     than it will loop over the seq again.
 
-    see cypher_interactive for input documentation.
-
     string: str Ex. 'Hello World'
     offset: list of ints Ex. [2, 32, 5]
     char_set: str Ex. 'abcdefghijklmnopqrstuwxyz'
     """
     len_char_set = len(char_set)
-    string = list(string)
-    num_offsets = len(offset)
+    string = list(string)  # 'convert the input string to a list of chars. Ex.Hello World' -->  ['H', 'e', 'l', 'l', 'o', ' ', 'W', 'o', 'r', 'l', 'd']
+    num_offsets = len(offset)  # how many items are in the offset list? Ex. 3
     for index, char in enumerate(string):
-        offset_this_char = offset[index % num_offsets]  # get the offset that will be used for this char, comes from offset
+        offset_this_char = offset[index % num_offsets]  # Get the offset that will be used for this char, This is an int from the offest list. will loop over [2, 32, 5]
         char_index = char_set.find(char) + offset_this_char  # the index at which the encrypted is found in char_set that is if char_set was looping indefinitely
         # which it doesn't, so we need to go back to the beginning and go form there)
-        char_index = char_index % len_char_set  # where the new letter is found in char_set
+        char_index = char_index % len_char_set  # the index at which the encrypted version of the char is found, Int
+        print(char_index)
         string[index] = char_set[char_index]  # change char
-    return ''.join(string)
+    return ''.join(string)  # list back to string
+
 
 
 def build_char_set_from_string(string):
