@@ -51,6 +51,7 @@ def shuffle_string(string):
 # helper function
 def add_spaces_to_sequence(str_or_list):
     """
+    This is a printing tool
     Takes a string or list and returns a string of characters where each character get space padding to a length of max_length
     str_or_list: a list of ints Ex. [21, 6, 7, 8, 0, 62]
     str_or_list: a str Ex. 'abc   def   ghi'  # just a random str
@@ -151,6 +152,7 @@ def cypher_interactive(string='Hello World', offset='auto', char_set='default', 
             print('\nDecrypted does NOT match original')
         print('\nOriginal: ' + string)
         print('Decrypted:' + decrypted_string)
+        print('Encrypted:' + encrypted_string)
 
     # two different ways to return the same data
     if return_type == 'list':
