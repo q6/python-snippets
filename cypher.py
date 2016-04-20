@@ -25,7 +25,6 @@ def encrypt_string(string, offset, char_set):
         char_index = char_set.find(char) + offset_this_char  # the index at which the encrypted is found in char_set that is if char_set was looping indefinitely
         # which it doesn't, so we need to go back to the beginning and go form there)
         char_index = char_index % len_char_set  # the index at which the encrypted version of the char is found, Int
-        print(char_index)
         string[index] = char_set[char_index]  # change char
     return ''.join(string)  # list back to string
 
