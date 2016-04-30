@@ -140,10 +140,15 @@ def caeser_cypher(string='Hello World', offset='auto', char_set='default', offse
         print(add_spaces_to_sequence(range_len))
         print(add_spaces_to_sequence(encrypted_string))
 
+
+    def decrypt(encrypted_string, offset, char_set):
+        decrypted_string = encrypt_string(encrypted_string, offset, char_set)
+        return decrypted_string
+
     # show_decrypt, by default we don't decrypt because there is no point in returning the decrypted string, only used for printing
     if show_decrypt:
         offset = [len_char_set-i for i in offset]  # to show_decrypt encrypt again
-        decrypted_string = encrypt_string(encrypted_string, offset, char_set)
+        decrypted_string = decrypt(encrypted_string, offset, char_set)
         print('\nDecrypted String')
         print(add_spaces_to_sequence(range_len))
         print(add_spaces_to_sequence(decrypted_string))
