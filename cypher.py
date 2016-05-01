@@ -1,4 +1,8 @@
-from random import SystemRandom
+from random import seed
+from random import shuffle
+from random import choice
+from random import randrange
+seed(3)
 
 s = 'There once was a king who lived in castle. Every Monday the king would give a speech. Except this Monday. He had thought it was Sunday.'
 # s = 'bla bla bla bla bla bla bla'
@@ -48,7 +52,7 @@ def shuffle_string(string):
     Ex. 'monday' --> 'ondyam'
     """
     string = list(string)
-    SystemRandom().shuffle(string)
+    shuffle(string)
     string = ''.join(string)
     return string
 
@@ -107,7 +111,7 @@ def caeser_cypher(string='Hello World', offset='auto', char_set='default', offse
 
     if offset is 'auto':  # no offset list is specified, generate one
         # generate a list of random offsets for encryption
-        offset = [SystemRandom().randrange(0, len_char_set+1) for i in range(offset_max_length)]  # +1 because randrange is exclusive
+        offset = [randrange(0, len_char_set+1) for i in range(offset_max_length)]  # +1 because randrange is exclusive
 
     # List, [1, 2, 3, 4, ...] for the length of the input string, will be used for printing. A simple index of chars
     range_len = list(range(len(string)))
@@ -170,4 +174,4 @@ def caeser_cypher(string='Hello World', offset='auto', char_set='default', offse
         return {'Character Set': char_set, 'Offset': offset, 'Encrypted String': encrypted_string}  # return a dictionary of required information to decrypt message
 
 # (cypher_interactive(string=s, no_print=False, char_set='', verify_cypher=False))
-(caeser_cypher(string='CAESER CYPHER', offset=[3, 6, 2], no_print=False, char_set='ABCDEFGHIJKLMNOPQRSTUVWXYZ ', verify_cypher=True))
+(caeser_cypher(string='CAESER CYPHER', no_print=False, char_set='ABCDEFGHIJKLMNOPQRSTUVWXYZ ', verify_cypher=True))
