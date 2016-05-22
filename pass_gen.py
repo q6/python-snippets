@@ -42,14 +42,14 @@ def ask_user_password_length():
 
 def ask_user_character_set():
     # ask user what characters the password should be made off
-    user_character_set = input('\
-    \nPassword can be made up of several character sets. (Press Enter to use all)\
-    \n1. numbers: {0}\
-    \n2. lower case letters: {1}\
-    \n3. upper case letters: {2}\
-    \n4. special characters: {3}\
-    \nType in the sets you would like to use.\
-    \n:'.format(chars_numbers, chars_alphabet_lower, chars_alphabet_upper, chars_special))
+    user_character_set = input('''
+Password can be made up of several character sets. (Press Enter to use all)
+1. numbers: {0}
+2. lower case letters: {1}
+3. upper case letters: {2}
+4. special characters: {3}
+Type in the sets you would like to use.
+:'''.format(chars_numbers, chars_alphabet_lower, chars_alphabet_upper, chars_special))
     user_char_sets = empty_to_new_value(user_character_set, '1234')  # if empty use all sets
     return user_char_sets
 
@@ -60,6 +60,21 @@ def generate_character_set(user_char_sets):
     for c in user_char_sets:
         set_for_password += chars_sets[int(c)-1]
     return set_for_password
+
+
+def ask_user_include_characters():
+    # ask the user if they want to include and characters
+    chars_include = input('\nAre there any character you want to include? (If no, press Enter.)\n:')
+    include_characters = ''.join(sorted(set(chars_include)))  # remove dupes from string
+    return include_characters
+
+
+def add_in_include_characters(password_set, include_characters):
+    # add the include characters to the password set
+    for c in include_characters:
+        if c not in password_set:
+            password_set += c
+    return password_set
 
 
 def ask_user_exclude_characters():
@@ -99,6 +114,8 @@ def ask_user_parameters_and_generate():
     user_password_length = ask_user_password_length()  # password length
     user_password_sets = ask_user_character_set()  # what the password should be made off
     password_set = generate_character_set(user_password_sets)  # characters password will be made of
+    include_characters = ask_user_include_characters()  # what characters should be included
+    password_set = add_in_include_characters(password_set, include_characters)  # add wanted characters
     exclude_characters = ask_user_exclude_characters()  # what characters should not be in password
     password_set = take_out_exclude_characters(password_set, exclude_characters)  # remove unwanted character from set
     generated_passwords = generate_passwords(user_password_quantity, user_password_length, password_set)
@@ -114,10 +131,10 @@ def ask_user_parameters_and_generate():
 # Runs the password generator over again. Allows the user to quit/rerun after any generation.
 while True:
     ask_user_parameters_and_generate()
-    user_continue = input('\nWould you like to generate more passwords?\
-\n1. Yes\
-\n2. No\
-\n:')
+    user_continue = input('''\nWould you like to generate more passwords?
+1. Yes
+2. No
+:''')
     if user_continue != '1':
         break
 
