@@ -9,7 +9,7 @@ what characters to exclude from the password.
 from random import choice
 
 # character the password can be made up off
-chars_numbers = '1234567890'
+chars_numbers = '0123456789'
 chars_alphabet_lower = 'abcdefghijklmnopqrstuwxyz'
 chars_alphabet_upper = 'ABCDEFGHIJKLMNOPQRSTUWXYZ'
 chars_special = '`~!@#$%^&*()-_=+\|]}[{";:/?.>,<*\'"'
@@ -98,6 +98,7 @@ def take_out_exclude_characters(password_set, exclude_characters):
 def generate_passwords(password_quantity, password_length, password_set):
     # generate password from set for a certain number of times (quantity)
     # all_passwords = []  # if you want to return all password uncomment this
+    print('\n', '='*10, 'GENERATED PASSWORD', '='*10, '\n', sep='')
     for p in range(password_quantity):
         password = ''
         # generate one password
@@ -105,6 +106,7 @@ def generate_passwords(password_quantity, password_length, password_set):
             password += choice(password_set)
         print(password)  # comment if you want to return all passwords instead printing one by one
         # all_passwords.append(password)  # uncomment if you want to return all password
+    print('\n', '='*38, sep='')
     # return '\n'.join(all_passwords)
 
 
@@ -121,12 +123,12 @@ def ask_user_parameters_and_generate():
     generated_passwords = generate_passwords(user_password_quantity, user_password_length, password_set)
 
     # print out final password with header, footer
-    print('Welcome to the password generator.')
-    print('\n', '='*10, 'GENERATED PASSWORD', '='*10, '\n', sep='')
-    print(generated_passwords)
-    print('\n', '='*38, sep='')
+    # print('\n', '='*10, 'GENERATED PASSWORD', '='*10, '\n', sep='')
+    # print(generated_passwords)
+    # print('\n', '='*38, sep='')
     print('\npassword generated from this set:', password_set, sep='\n')
     print('\nThe following characters were excluded:', exclude_characters, sep='\n')
+    return generated_passwords
 
 # Runs the password generator over again. Allows the user to quit/rerun after any generation.
 while True:
