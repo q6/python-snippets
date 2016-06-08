@@ -58,7 +58,7 @@ def shuffle_string(string):
 
 
 # helper function
-def add_spaces_to_sequence(str_or_list):
+def add_spaces_to_sequence(str_or_list, max_length=None):
     """
     This is a printing tool
     Takes a string or list and returns a string of characters where each character get space padding to a length of max_length
@@ -68,7 +68,8 @@ def add_spaces_to_sequence(str_or_list):
     Ex. string = 'abc   def   ghi'  --> 15 --> 2 a  b  d  e'
     Ex. sequence_numbers = [21, 6, 7, 8, 0, 62] --> '21   6   7   8   0  62'
     """
-    max_length = len(str(len(str_or_list)))  # 'abc   def   ghi'  --> 15 --> 2. Same for list and str
+    if max_length is None:
+        max_length = len(str(len(str_or_list)))  # 'abc   def   ghi'  --> 15 --> 2. Same for list and str
 
     if type(str_or_list) == 'str':
         output = [c.rjust(max_length, ' ') for c in str_or_list]
@@ -135,8 +136,10 @@ def caeser_cypher(string='Hello World', offset='auto', char_set='default', offse
     # show the offset to the user
     if show_offset:
         print('\nOffset')
-        print(add_spaces_to_sequence(range_len))
-        print(add_spaces_to_sequence(offset))
+        # print('debug', len(str(range_len[-1])))
+        len_longest_str = max(len_longest_item_in_list(range_len), len_longest_item_in_list(offset))
+        print(add_spaces_to_sequence(range_len, len_longest_str))
+        print(add_spaces_to_sequence(offset, len_longest_str))
 
     # show encrypted string
     if show_encrypt:
@@ -173,5 +176,23 @@ def caeser_cypher(string='Hello World', offset='auto', char_set='default', offse
     else:
         return {'Character Set': char_set, 'Offset': offset, 'Encrypted String': encrypted_string}  # return a dictionary of required information to decrypt message
 
-# (cypher_interactive(string=s, no_print=False, char_set='', verify_cypher=False))
-(caeser_cypher(string='CAESER CYPHER', no_print=False, char_set='ABCDEFGHIJKLMNOPQRSTUVWXYZ ', verify_cypher=True))
+
+def len_longest_item_in_list(list):
+    """
+    list: duh, a list
+    returns: Int. Length of the longest item.
+    Finds the longest item in list. Long: length in chars. I.e. '312' is longer than '76'
+    [1, 2, ... 114] -> 114 -> '114' -> 3 (len of last item in range_len)
+    """
+    # return len(str(list[-1]))  # this assumes the loongest item is the last in the last
+    len_longest = 0
+    for item in list:
+        if len(str(item)) > len_longest:
+            len_longest = len(str(item))
+
+    return len_longest
+
+
+# (caeser_cypher(string=s, no_print=False, char_set='', verify_cypher=False))
+# (caeser_cypher(string='CAESER CYPHER', no_print=False, char_set='ABCDEFGHIJKLMNOPQRSTUVWXYZ ', verify_cypher=True))
+caeser_cypher(string='What\'s len(str(range_len[-1]))len(str(range_len[-1]))len(str(range_len[-1]))len(str(range_len[-1]))len(str(range_len[-1]))len(str(range_len[-1]))len(str(range_len[-1]))')
