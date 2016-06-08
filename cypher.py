@@ -1,10 +1,6 @@
 from random import shuffle
 from random import randrange
 
-s = 'There once was a king who lived in castle. Every Monday the king would give a speech. Except this Monday. He had thought it was Sunday.'
-# s = 'bla bla bla bla bla bla bla'
-s = 'The worst is when it rains. Summer heat at it\'s best'
-
 
 def encrypt_string(string, offset, char_set):
     """
@@ -28,7 +24,6 @@ def encrypt_string(string, offset, char_set):
         char_index = char_index % len_char_set  # the index at which the encrypted version of the char is found, Int
         string[index] = char_set[char_index]  # change char
     return ''.join(string)  # list back to string
-
 
 
 def build_char_set_from_string(string):
