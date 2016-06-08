@@ -77,6 +77,22 @@ def add_spaces_to_sequence(str_or_list, max_length=None):
     return ' '.join(output)  # convert list to str
 
 
+def len_longest_item_in_list(list):
+    """
+    list: duh, a list
+    returns: Int. Length of the longest item.
+    Finds the longest item in list. Long: length in chars. I.e. '312' is longer than '76'
+    [1, 2, ... 114] -> 114 -> '114' -> 3 (len of last item in range_len)
+    """
+    # return len(str(list[-1]))  # this assumes the loongest item is the last in the last
+    len_longest = 0
+    for item in list:
+        if len(str(item)) > len_longest:
+            len_longest = len(str(item))
+
+    return len_longest
+
+
 def caeser_cypher(string='Hello World', offset='auto', char_set='default', offset_max_length='auto', show_char_set=True, show_encrypt=True, show_decrypt=True, show_offset=True, no_print=False, verify_cypher=False, return_type='list'):
     """
     Lets the user run cypher interactively. Preferred method of using cypher()
@@ -206,22 +222,6 @@ def caeser_cypher(string='Hello World', offset='auto', char_set='default', offse
         return [char_set, offset, encrypted_string]  # return a list of required information to decrypt message
     else:
         return {'Character Set': char_set, 'Offset': offset, 'Encrypted String': encrypted_string}  # return a dictionary of required information to decrypt message
-
-
-def len_longest_item_in_list(list):
-    """
-    list: duh, a list
-    returns: Int. Length of the longest item.
-    Finds the longest item in list. Long: length in chars. I.e. '312' is longer than '76'
-    [1, 2, ... 114] -> 114 -> '114' -> 3 (len of last item in range_len)
-    """
-    # return len(str(list[-1]))  # this assumes the loongest item is the last in the last
-    len_longest = 0
-    for item in list:
-        if len(str(item)) > len_longest:
-            len_longest = len(str(item))
-
-    return len_longest
 
 
 caeser_cypher(string='This is an example of the Caesar Cypher.', offset=[2, 5, 7], verify_cypher=True)
