@@ -1,6 +1,4 @@
-from random import seed
 from random import shuffle
-from random import choice
 from random import randrange
 
 s = 'There once was a king who lived in castle. Every Monday the king would give a speech. Except this Monday. He had thought it was Sunday.'
