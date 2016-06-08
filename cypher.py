@@ -2,7 +2,6 @@ from random import seed
 from random import shuffle
 from random import choice
 from random import randrange
-seed(3)
 
 s = 'There once was a king who lived in castle. Every Monday the king would give a speech. Except this Monday. He had thought it was Sunday.'
 # s = 'bla bla bla bla bla bla bla'
@@ -131,13 +130,45 @@ def caeser_cypher(string='Hello World', offset='auto', char_set='default', offse
     # print out char_set
     if show_char_set:
         print('Character set')
-        print(char_set)
+        print(add_spaces_to_sequence(range(len(char_set))))
+        print(add_spaces_to_sequence(char_set))
 
     # show the offset to the user
     if show_offset:
         print('\nOffset')
-        # print('debug', len(str(range_len[-1])))
+
+        """
+        So unlike the en/decrypted string which can be broken down into single chars the offset list cannot. i.e. 51 into 5, 1 is just silly.
+        So we have to evenly space the offset
+
+         0  1  2  3  4  5  6  7  8  9 10 11 12 13 14
+         2  5  7  0 33  2  5  7  0 33  2  5  7  0 33
+        """
         len_longest_str = max(len_longest_item_in_list(range_len), len_longest_item_in_list(offset))
+
+        if len(offset) < len(string):  # if the offset list is shorter than the string we loop the offset until it matches the length of the string
+            """
+             0 1 2 3 4
+             2 5 7
+            turns into
+             0 1 2 3 4
+             2 5 7 2 5
+            """
+            offset_for_print = offset * (len(string) // len(offset))
+            offset_for_print += offset[:(len(string) % len(offset))]
+            offset = offset_for_print
+
+        if len(offset) > len(string):
+            """
+             0  1  2
+             2  5  7 33 12 43 29
+            turns into
+             0  1  2
+             2  5  7
+            """
+            offset = offset[:len(string)]
+
+        # finally print something
         print(add_spaces_to_sequence(range_len, len_longest_str))
         print(add_spaces_to_sequence(offset, len_longest_str))
 
@@ -193,6 +224,4 @@ def len_longest_item_in_list(list):
     return len_longest
 
 
-# (caeser_cypher(string=s, no_print=False, char_set='', verify_cypher=False))
-# (caeser_cypher(string='CAESER CYPHER', no_print=False, char_set='ABCDEFGHIJKLMNOPQRSTUVWXYZ ', verify_cypher=True))
-caeser_cypher(string='What\'s len(str(range_len[-1]))len(str(range_len[-1]))len(str(range_len[-1]))len(str(range_len[-1]))len(str(range_len[-1]))len(str(range_len[-1]))len(str(range_len[-1]))')
+caeser_cypher(string='This is an example of the Caesar Cypher.', offset=[2, 5, 7], verify_cypher=True)
