@@ -1,6 +1,7 @@
 from random import shuffle
 from random import randrange
 
+chars_default = '`~!@#$%^&()-_=+\|]}[{"\';:/?.>,<*abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 '  # define globally so all functions have access to it
 
 def encrypt_string(string, offset, char_set):
     """
@@ -224,8 +225,8 @@ def caeser_cypher(string='Hello World', offset='auto', char_set='default', offse
     verify_cypher: Boolean. Does the decrypted message match the original input?
     return_type: 'list' or 'dict'. User picks their desired return type. Dictionary has keys but no order, list has only order
     """
-    chars_default = '`~!@#$%^&()-_=+\|]}[{"\';:/?.>,<*abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 '
     chars_default = shuffle_string(chars_default)  # shuffle the order of chars_default
+    global chars_default  # TODO better than a global var?
 
     # get the char_set
     if char_set == 'input':
