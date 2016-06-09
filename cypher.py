@@ -236,6 +236,10 @@ def caeser_cypher(string='Hello World', offset='auto', char_set='default', offse
     else:
         pass  # if the user provided their own char_set use it
 
+    # randomize the order of the character set
+    if shuffle_char_set:
+        char_set = shuffle_string(char_set)
+
     # if user wants 'auto' offset set the max length to length of string
     if offset_length == 'auto':  # offset length is as long as string itself, safest
         offset_length = len(string)
