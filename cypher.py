@@ -107,10 +107,12 @@ def caeser_cypher(string='Hello World', offset='auto', char_set='default', offse
     chars_default = shuffle_string(chars_default)  # shuffle the order of chars_default
 
     # get the char_set
-    if char_set == 'auto':
+    if char_set == 'input':
         char_set = build_char_set_from_string(string)  # build a char_set made up of input string
-    else:  # when set to something other than 'auto', aka 'default'
-        char_set = chars_default
+    elif char_set == 'default':
+        char_set = chars_default  # use chars_default
+    else:
+        pass  # if the user provided their own char_set use it
 
     # if user wants 'auto' offset set the max length to length of string
     if offset_max_length == 'auto':  # offset length is as long as string itself, safest
