@@ -140,7 +140,7 @@ def caeser_cypher(string='Hello World', offset='auto', char_set='default', offse
 
     # print out char_set
     if show_char_set:
-        print('Character set')
+        print('Character Set')
         print(add_spaces_to_sequence(range(len(char_set))))
         print(add_spaces_to_sequence(char_set))
 
