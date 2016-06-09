@@ -86,7 +86,128 @@ def len_longest_item_in_list(lst):
     return len_longest
 
 
-def caeser_cypher(string='Hello World', offset='auto', char_set='default', offset_max_length='auto', show_char_set=True, show_encrypt=True, show_decrypt=True, show_offset=True, no_print=False, verify_cypher=False, return_type='list'):
+def print_offset(offset, string, range_len):
+    print('\nOffset')
+
+    """
+    So unlike the en/decrypted string which can be broken down into single chars the offset list cannot. i.e. 51 into 5, 1 is just silly.
+    So we have to evenly space the offset
+
+     0  1  2  3  4  5  6  7  8  9 10 11 12 13 14
+     2  5  7  0 33  2  5  7  0 33  2  5  7  0 33
+    """
+    len_longest_str = max(len_longest_item_in_list(range_len), len_longest_item_in_list(offset))
+
+    if len(offset) < len(
+            string):  # if the offset list is shorter than the string we loop the offset until it matches the length of the string
+        """
+         0 1 2 3 4
+         2 5 7
+        turns into
+         0 1 2 3 4
+         2 5 7 2 5
+        """
+        offset_for_print = offset * (len(string) // len(offset))
+        offset_for_print += offset[:(len(string) % len(offset))]
+        offset = offset_for_print
+
+    if len(offset) > len(string):
+        """
+         0  1  2
+         2  5  7 33 12 43 29
+        turns into
+         0  1  2
+         2  5  7
+        """
+        offset = offset[:len(string)]
+
+    # finally print something
+    print(add_spaces_to_sequence(range_len, len_longest_str))
+    print(add_spaces_to_sequence(offset, len_longest_str))
+
+
+def print_encrypt(range_len, encrypted_string):  # TODO add docs
+    """
+    Print an encrypted message.
+    Example output
+    0  1  2  3  4  5  6  7  8  9 10
+    i  t  e  e  e  s  p     n  q
+    """
+    print('\nEncrypted String')
+    print(add_spaces_to_sequence(range_len))
+    print(add_spaces_to_sequence(encrypted_string))
+
+
+def print_decrypt(offset, encrypted_string, char_set, len_char_set, range_len):
+    """
+    Print decrypted message
+
+    Example output:
+    Decrypted String
+    0  1  2  3  4  5  6  7  8  9 10
+    j  h  y  y  v  k  i  l  j  v  w
+    """
+    decrypted_string = decrypt(encrypted_string, offset, char_set, len_char_set)
+    print('\nDecrypted String')
+    print(add_spaces_to_sequence(range_len))
+    print(add_spaces_to_sequence(decrypted_string))
+
+
+def decrypt(encrypted_string, offset, char_set, len_char_set):
+    """
+    Decrypt an encrypted message
+    encrypted_string: str. A message to decrypt
+    offset: list. A list of integers
+    char_set: str. A string of chars. Ex. 'abcde'
+    """
+    offset = [len_char_set - i for i in offset]  # to show_decrypt encrypt again
+    decrypted_string = encrypt_string(encrypted_string, offset, char_set)
+    return decrypted_string
+
+
+def generate_offset_list(len_char_set, string=None, offset_length='auto'):
+    """
+    len_char_set: Int. How long the character set is.
+    offset_max_length: Int. How long the List of offsets should be
+
+    If string is not provided offset_length must be
+
+    Ex. [3, 9, 2, 10]
+    """
+    # if user wants 'auto' offset set the max length to length of string
+    if offset_length == 'auto':  # offset length is as long as string itself, safest
+        offset_length = len(string)
+
+    # generate a list of random offsets for encryption
+    offset = [randrange(0, len_char_set + 1) for i in range(offset_length)]  # +1 because randrange is exclusive
+    return offset
+
+
+def print_char_set(char_set):
+    """
+    char_set: A string of character.
+    """
+    print('Character Set')
+    print(add_spaces_to_sequence(range(len(char_set))))
+    print(add_spaces_to_sequence(char_set))
+
+
+def verify_cypher(encrypted_string, string, char_set, offset_list):
+    """
+    check that the decrypted and original message are the same. Just to be sure they are indeed the same, which they really should be.
+    """
+    len_char_set = len(char_set)
+    decrypted_string = decrypt(encrypted_string, offset_list, char_set, len_char_set)
+    if string == decrypted_string:
+        print('\nDecrypted matches original')
+    else:
+        print('\nDecrypted does NOT match original')
+    print('\nOriginal: ' + string)
+    print('Decrypted:' + decrypted_string)
+    print('Encrypted:' + encrypted_string)
+
+
+def caeser_cypher(string='Hello World', offset='auto', char_set='default', offset_length='auto', show_char_set=True, show_encrypt=True, show_decrypt=True, show_offset=True, no_print=False, verify_cypher_option=False, return_type='list'):
     """
     Lets the user run cypher interactively. Preferred method of using cypher()
     Any character that is not in the char_set will be encrypted as char_set[-1]
@@ -94,7 +215,7 @@ def caeser_cypher(string='Hello World', offset='auto', char_set='default', offse
     string: String. A string to encrypt.
     offset: 'auto' or list of ints. If 'auto' it will auto generate a list of random offsets. You can specify a offset or let have one generated for you.
     char_set: 'auto' or String. String of char that are in the message
-    offset_max_length: Int. The number of random offsets generated. Default is 20. Only used when no offset is provided
+    offset_length: Int. The number of random offsets generated. Default is 20. Only used when no offset is provided
     show_char_set: Boolean. Show the char_set which
     show_encrypt: Boolean. Show encrypted string.
     show_decrypt: Boolean. show_decrypt the message at runtime, used to verify the encryption. Will also print the show_decrypted message.
@@ -115,14 +236,12 @@ def caeser_cypher(string='Hello World', offset='auto', char_set='default', offse
         pass  # if the user provided their own char_set use it
 
     # if user wants 'auto' offset set the max length to length of string
-    if offset_max_length == 'auto':  # offset length is as long as string itself, safest
-        offset_max_length = len(string)
+    if offset_length == 'auto':  # offset length is as long as string itself, safest
+        offset_length = len(string)
 
     len_char_set = len(char_set)  # used for getting the index of the new letter
 
-    if offset is 'auto':  # no offset list is specified, generate one
-        # generate a list of random offsets for encryption
-        offset = [randrange(0, len_char_set+1) for i in range(offset_max_length)]  # +1 because randrange is exclusive
+    offset = generate_offset_list(len_char_set, string, offset_length)
 
     # List, [1, 2, 3, 4, ...] for the length of the input string, will be used for printing. A simple index of chars
     range_len = list(range(len(string)))
@@ -136,81 +255,27 @@ def caeser_cypher(string='Hello World', offset='auto', char_set='default', offse
         show_decrypt = False
         show_char_set = False
         show_offset = False
-        verify_cypher = False
+        verify_cypher_option = False
 
     # print out char_set
     if show_char_set:
-        print('Character Set')
-        print(add_spaces_to_sequence(range(len(char_set))))
-        print(add_spaces_to_sequence(char_set))
+        print_char_set(char_set)
 
     # show the offset to the user
     if show_offset:
-        print('\nOffset')
-
-        """
-        So unlike the en/decrypted string which can be broken down into single chars the offset list cannot. i.e. 51 into 5, 1 is just silly.
-        So we have to evenly space the offset
-
-         0  1  2  3  4  5  6  7  8  9 10 11 12 13 14
-         2  5  7  0 33  2  5  7  0 33  2  5  7  0 33
-        """
-        len_longest_str = max(len_longest_item_in_list(range_len), len_longest_item_in_list(offset))
-
-        if len(offset) < len(string):  # if the offset list is shorter than the string we loop the offset until it matches the length of the string
-            """
-             0 1 2 3 4
-             2 5 7
-            turns into
-             0 1 2 3 4
-             2 5 7 2 5
-            """
-            offset_for_print = offset * (len(string) // len(offset))
-            offset_for_print += offset[:(len(string) % len(offset))]
-            offset = offset_for_print
-
-        if len(offset) > len(string):
-            """
-             0  1  2
-             2  5  7 33 12 43 29
-            turns into
-             0  1  2
-             2  5  7
-            """
-            offset = offset[:len(string)]
-
-        # finally print something
-        print(add_spaces_to_sequence(range_len, len_longest_str))
-        print(add_spaces_to_sequence(offset, len_longest_str))
+        print_offset(offset, string, range_len)
 
     # show encrypted string
     if show_encrypt:
-        print('\nEncrypted String')
-        print(add_spaces_to_sequence(range_len))
-        print(add_spaces_to_sequence(encrypted_string))
-
-
-    def decrypt(encrypted_string, offset, char_set):
-        decrypted_string = encrypt_string(encrypted_string, offset, char_set)
-        return decrypted_string
+        print_encrypt(range_len, encrypted_string)
 
     # show_decrypt, by default we don't decrypt because there is no point in returning the decrypted string, only used for printing
     if show_decrypt:
-        offset = [len_char_set-i for i in offset]  # to show_decrypt encrypt again
-        decrypted_string = decrypt(encrypted_string, offset, char_set)
-        print('\nDecrypted String')
-        print(add_spaces_to_sequence(range_len))
-        print(add_spaces_to_sequence(decrypted_string))
+        print_decrypt(offset, encrypted_string, char_set, len_char_set, range_len)
 
-    # check that the decrypted and original message are the same. Just to be sure they are indeed the same, which they really should be.
-    if verify_cypher:
-        if string == decrypted_string:
-            print('\nDecrypted matches original')
-        else:
-            print('\nDecrypted does NOT match original')
-        print('\nOriginal: ' + string)
-        print('Decrypted:' + decrypted_string)
-        print('Encrypted:' + encrypted_string)
+    # make sure encrypted message can be decrypted using the encrypted message, offset list, character set
+    if verify_cypher_option:
+        verify_cypher(encrypted_string, string, char_set, offset)
 
     # two different ways to return the same data
     if return_type == 'list':
