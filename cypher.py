@@ -21,7 +21,7 @@ def encrypt_string(string, offset, char_set):
         offset_this_char = offset[index % num_offsets]  # Get the offset that will be used for this char, This is an int from the offest list. will loop over [2, 32, 5]
         char_index = char_set.find(char) + offset_this_char  # the index at which the encrypted is found in char_set that is if char_set was looping indefinitely
         # which it doesn't, so we need to go back to the beginning and go form there)
-        char_index = char_index % len_char_set  # the index at which the encrypted version of the char is found, Int
+        char_index %= len_char_set  # the index at which the encrypted version of the char is found, Int
         string[index] = char_set[char_index]  # change char
     return ''.join(string)  # list back to string
 
@@ -70,7 +70,7 @@ def add_spaces_to_sequence(str_or_list, max_length=None):
     return ' '.join(output)  # convert list to str
 
 
-def len_longest_item_in_list(list):
+def len_longest_item_in_list(lst):
     """
     list: duh, a list
     returns: Int. Length of the longest item.
@@ -79,7 +79,7 @@ def len_longest_item_in_list(list):
     """
     # return len(str(list[-1]))  # this assumes the loongest item is the last in the last
     len_longest = 0
-    for item in list:
+    for item in lst:
         if len(str(item)) > len_longest:
             len_longest = len(str(item))
 
