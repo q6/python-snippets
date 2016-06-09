@@ -242,7 +242,8 @@ def caeser_cypher(string='Hello World', offset='auto', char_set='default', offse
 
     len_char_set = len(char_set)  # used for getting the index of the new letter
 
-    offset = generate_offset_list(len_char_set, string, offset_length)
+    if offset == 'auto':  # generate a full length offset list
+        offset = generate_offset_list(len_char_set, string, offset_length)
 
     # List, [1, 2, 3, 4, ...] for the length of the input string, will be used for printing. A simple index of chars
     range_len = list(range(len(string)))
