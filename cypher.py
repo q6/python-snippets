@@ -207,6 +207,8 @@ def verify_cypher(encrypted_string, string, char_set, offset_list):
     print('Decrypted:' + decrypted_string)
     print('Encrypted:' + encrypted_string)
 
+def len_string_to_list_range(string):
+    return list(range(len(string)))
 
 def caeser_cypher(string='Hello World', offset='auto', char_set='default', offset_length='auto', show_char_set=True, show_encrypt=True, show_decrypt=True, show_offset=True, no_print=False, verify_cypher_option=False, return_type='list'):
     """
@@ -250,7 +252,7 @@ def caeser_cypher(string='Hello World', offset='auto', char_set='default', offse
         offset = generate_offset_list(len_char_set, string, offset_length)
 
     # List, [1, 2, 3, 4, ...] for the length of the input string, will be used for printing. A simple index of chars
-    range_len = list(range(len(string)))
+    range_len = len_string_to_list_range(string)
 
     # encrypt
     encrypted_string = encrypt_string(string, offset, char_set)
