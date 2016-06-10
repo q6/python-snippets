@@ -1,5 +1,6 @@
 from random import shuffle
 from random import randrange
+from re import findall
 
 chars_default = '`~!@#$%^&()-_=+\|]}[{"\';:/?.>,<*abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890 '  # define globally so all functions have access to it
 
@@ -139,7 +140,7 @@ def print_encrypt(range_len, encrypted_string):  # TODO add docs
     print(add_spaces_to_sequence(encrypted_string))
 
 
-def print_decrypt(offset, encrypted_string, char_set, len_char_set, range_len):
+def print_decrypt(offset, encrypted_string, char_set, len_char_set=None, range_len=None):  # TODO change so I no longer need to provide len_char_set and range_len
     """
     Print decrypted message
 
@@ -148,6 +149,14 @@ def print_decrypt(offset, encrypted_string, char_set, len_char_set, range_len):
     0  1  2  3  4  5  6  7  8  9 10
     j  h  y  y  v  k  i  l  j  v  w
     """
+    if len_char_set is None:
+        len_char_set = len(char_set)
+
+    if range_len is None:
+        range_len = len_string_to_list_range(encrypted_string)
+
+
+
     decrypted_string = decrypt(encrypted_string, offset, char_set, len_char_set)
     print('\nDecrypted String')
     print(add_spaces_to_sequence(range_len))
@@ -207,10 +216,29 @@ def verify_cypher(encrypted_string, string, char_set, offset_list):
     print('Decrypted:' + decrypted_string)
     print('Encrypted:' + encrypted_string)
 
+
 def len_string_to_list_range(string):
+    """
+    Generates a list of ints starting at zero increasing sequentially until len(string)
+    string: String. Any string
+    returns: List of ints
+    'Hello' --> [0, 1, 2, 3, 4]
+    """
     return list(range(len(string)))
 
-def caeser_cypher(string='Hello World', offset='auto', char_set='default', offset_length='auto', show_char_set=True, show_encrypt=True, show_decrypt=True, show_offset=True, no_print=False, verify_cypher_option=False, return_type='list'):
+
+def string_of_int_to_list_of_ints(string_of_ints):
+    """
+    Convert a string of ints to a list of ints
+    string_of_ints: String. A series of intergers seperated by whitespace
+    Ex. '53 6 12 98' --> [53, 6, 12, 98]
+    """
+    list_of_ints = findall('(\d+)', string_of_ints)  # ['53', '6', '12', '98']
+    list_of_ints = [int(i) for i in list_of_ints]  # [53, 6, 12, 98]
+    return list_of_ints
+
+
+def caeser_cypher(string='Hello World', offset='auto', char_set='default', shuffle_char_set=True, offset_length='auto', show_char_set=True, show_encrypt=True, show_decrypt=True, show_offset=True, no_print=False, verify_cypher_option=False, return_type='list'):
     """
     Lets the user run cypher interactively. Preferred method of using cypher()
     Any character that is not in the char_set will be encrypted as char_set[-1]
@@ -227,7 +255,6 @@ def caeser_cypher(string='Hello World', offset='auto', char_set='default', offse
     verify_cypher: Boolean. Does the decrypted message match the original input?
     return_type: 'list' or 'dict'. User picks their desired return type. Dictionary has keys but no order, list has only order
     """
-    chars_default = shuffle_string(chars_default)  # shuffle the order of chars_default
     global chars_default  # TODO better than a global var?
 
     # get the char_set
@@ -292,4 +319,221 @@ def caeser_cypher(string='Hello World', offset='auto', char_set='default', offse
         return {'Character Set': char_set, 'Offset': offset, 'Encrypted String': encrypted_string}  # return a dictionary of required information to decrypt message
 
 
-caeser_cypher(string='This is an example of the Caesar Cypher.', offset=[2, 5, 7], verify_cypher=True)
+def interactive_caeser_cypher():
+    greeting = """
+=== Welcome to the Interactive Caesar Cypher ===
+
+This is a script that will let you encrypt a message so that it cannot be read without a key.
+It's a variation of the Caesar Cypher because not all characters don't have to have the same offset.
+In addition to encrypting messages, it can also decrypt messages using a provided key.
+
+The key consists of two (2) items:
+   - Character Set ( a list of characters, Ex. ['a', 'b', 'c', ..., 'z', ' '] )
+   - Offset Set ( a list of integers, Ex. [6, 7, 7, ...] )
+"""
+
+    tutorial = """
+=== Tutorial - How to decrypt an encrypted string manually ===
+
+1. Ensure you have:
+
+   Character set
+    Index      0  1  2  3  4  5  6  7  8  9 10 11 12 13 14 15 16 17 18 19 20 21 22 23 24 25 26
+    Character  a  b  c  d  e  f  g  h  i  j  k  l  m  n  o  p  q  r  s  t  u  v  w  x  y  z
+
+   Encrypted String
+    Index      0  1  2  3  4  5  6  7  8  9 10
+    Character  n  l  s  m  a  i  c  z  o  j  p
+
+   Offset
+    Index   0  1  2  3  4  5  6  7  8  9 10
+    Offset  6  7  7  1 13  9  7 11 24 25 12
+
+2. For every character in the encrypted message find that character in the Character Set.
+   Example #1
+    The letter at index 0 in the encrypted message is 'n'
+    'n' in the Character Set is at index 13
+
+   Example #2
+    The letter at index 6 is 'c'
+    'c' in the Character Set is at index 2
+
+3. In the Offset Set at the same location as the character from step 2 look at the offset number
+   ( If in step 2 you were on the 5th letter in the Offset Set look at the 5th offset number )
+   Example #1
+    The offset at index 0 in the Offset Set is 6
+
+   Example #2
+    The offset at index 6 in the Offset Set is 7
+
+4. Subtract the number obtained in step 3 from that obtained in step 2. This will be the decrypted letter
+   ( If the resulting number is smaller than 0 add the length of the Character Set to it )
+   Example #1
+    13 - 6 = 7
+    The character at index 7 in the Character Set is 'h'
+
+   Example #2
+    2 - 7 = -5
+    Because -7 is smaller than 0 we add 27 ( 27 is the length of the Character Set ) to it.
+    -5 + 27 = 22
+    The character at index 22 in the Character Set is 'w'
+
+5. Repeat process for all characters in the encrypted message and you will have decrypted your message
+   Decrypted String
+    Index      0  1  2  3  4  5  6  7  8  9 10
+    Character  h  e  l  l  o     w  o  r  l  d
+"""
+
+    user_options = """
+1. Encrypt a string
+2. Decrypt a string
+3. Tutorial - How to decrypt string manually
+4. Exit
+:"""  # TODO add background info section
+
+    # greet the user
+    print(greeting)
+
+
+    while True:
+
+        # ask the user what they want to do
+        user_choice = input(user_options)
+
+        # user wants to encrypt a string
+        if user_choice == '1':
+
+            # let user know they are encrypting a string
+            print('=== Encrypt a String ===')
+
+            # ask user to enter a string to encrypt
+            user_string = input('Enter a string to encrypt\n:')
+
+            # what kind of character set
+            user_char_set = input(
+"""
+What kind of character set would you like to use?
+1. Default set:
+    {}
+2. Build from input string
+3. Custom ( will at least include characters from the input string )
+:""".format(chars_default))
+
+            if user_char_set == '1':  # default set
+                user_char_set = 'default'  # TODO move char set back into caeser cypher, no need for it to be in global
+            elif user_char_set == '2':  # build from input string
+                user_char_set = 'input'
+            elif user_char_set == '3':  # user want to make own chars set. But at least those c in string have to be included
+                user_char_set = input('Enter the characters you want to include in addition to the one in the input string\n:')
+                user_char_set = set(build_char_set_from_string(user_string) + user_char_set)
+                user_char_set = ''.join(user_char_set)
+
+            # ask the user if they want to shuffle the string
+            user_shuffle_char_set = input(
+"""
+Would you like to shuffle the character set? It is suggested you choose yes to make breaking the cypher more difficult.
+Example: 'abcdef' --> 'cefbda'
+1. Yes
+2. No
+:""")
+            if user_shuffle_char_set == '1':  # if user wants to shuffle string
+                user_shuffle_char_set = True
+            else:  # do not shuffle
+                user_shuffle_char_set = False
+
+            # ask user what kind of offset list
+            user_offset = input(
+"""
+What kind of offset would you like use?
+1. I want to provide a custom offset list
+2. Generate one for me
+:""")
+
+            # User will enter their own offset list
+            if user_offset == '1':
+                user_offset = input(
+"""
+Enter a custom offset list.
+Example: "5 32 9 12 7" ( no quotes, only digits and spaces )
+:""")
+                user_offset = string_of_int_to_list_of_ints(user_offset)
+                user_offset_length = 'auto'
+
+            # generate an offset list for user, still need to ask them how long it should be
+            elif user_offset == '2':
+                user_offset_length = input(
+"""
+How long should the offset list be?
+Enter \'auto\' ( no quotes ) to be the full length of the input string ( this is the secure option )
+Or enter a number larger than 0.
+:""")
+                if user_offset_length == 'auto':  # generate a full length offset list  # TODO find out even though offset is generated here will caeser cypher generate one anyway because of 'auto'
+                    user_offset = 'auto'
+                elif user_offset_length.isdigit():  # user entered a number, specified length
+                    user_offset_length = int(user_offset_length)
+                    user_offset = 'auto'  # TODO find out if this is necessary setting it to auto
+                    # user_offset = generate_offset_list(len(user_char_set), offset_length=user_offset_length)
+
+                # user_offset = 'auto'  # DEBUG
+
+            # print('DEBUG'*20)
+            # print('string', user_string)
+            # print('offset', user_offset)
+            # print('offset length', user_offset_length)
+            # print('char set', user_char_set)
+            # print('user_shuffle_char_set', user_shuffle_char_set)
+            caeser_cypher(string=user_string, offset=user_offset, offset_length=user_offset_length, char_set=user_char_set, shuffle_char_set=user_shuffle_char_set, verify_cypher_option=True)
+
+        if user_choice == '2':
+            print('=== Decrypt a String ===')
+            user_encrypted_string = input("""
+To decrypt a string you must provide the following:
+    - Encrypted string
+    - Offset List
+    - Character Set
+
+Please enter the encrypted String
+:""")
+
+            user_offset_list = input(
+"""
+Enter the offset list.
+Example: "5 32 9 12 7" ( no quotes, only digits and spaces )
+:""")
+            user_offset_list = string_of_int_to_list_of_ints(user_offset_list)
+
+            user_char_set_choice = input(
+"""
+What kind of character set would you like to use?
+1. Default
+    {}
+2. Custom
+:""".format(chars_default))
+
+            # use the default character set to decrypt
+            if user_char_set_choice == '1':
+                user_char_set = chars_default
+
+            # let the user provide their character set
+            if user_char_set_choice == '2':
+                user_char_set = input(
+"""
+Enter to character set.
+Example: "abcdefghijklmnopqrstuvwxyz 0123456789" ( no quotes )
+:""")
+            # DEBUG
+            print(user_offset_list)
+            print(user_encrypted_string)
+            print(user_char_set)
+            print_decrypt(user_offset_list, user_encrypted_string, user_char_set)
+
+
+        if user_choice == '3':
+            print(tutorial)
+
+        if user_choice == '4':
+            print('=== Successfully exited ===')
+            break
+
+
+interactive_caeser_cypher()
