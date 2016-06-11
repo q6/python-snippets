@@ -6,7 +6,7 @@ chars_default = '`~!@#$%^&()-_=+\|]}[{"\';:/?.>,<*abcdefghijklmnopqrstuvwxyzABCD
 
 def encrypt_string(string, offset, char_set):
     """
-    A script that uses the ceaser cypher to encrypt text. Instead of
+    A script that uses the Caesar cypher to encrypt text. Instead of
     using the same offset for each letter, it uses a sequence of offsets.
     This sequence looks something like this [23, 43, 6], it can be any length
     greater than zero. If the string is longer than len(offset)
@@ -20,7 +20,7 @@ def encrypt_string(string, offset, char_set):
     string = list(string)  # 'convert the input string to a list of chars. Ex.Hello World' -->  ['H', 'e', 'l', 'l', 'o', ' ', 'W', 'o', 'r', 'l', 'd']
     num_offsets = len(offset)  # how many items are in the offset list? Ex. 3
     for index, char in enumerate(string):
-        offset_this_char = offset[index % num_offsets]  # Get the offset that will be used for this char, This is an int from the offest list. will loop over [2, 32, 5]
+        offset_this_char = offset[index % num_offsets]  # Get the offset that will be used for this char, This is an int from the offset list. will loop over [2, 32, 5]
         char_index = char_set.find(char) + offset_this_char  # the index at which the encrypted is found in char_set that is if char_set was looping indefinitely
         # which it doesn't, so we need to go back to the beginning and go form there)
         char_index %= len_char_set  # the index at which the encrypted version of the char is found, Int
@@ -79,7 +79,7 @@ def len_longest_item_in_list(lst):
     Finds the longest item in list. Long: length in chars. I.e. '312' is longer than '76'
     [1, 2, ... 114] -> 114 -> '114' -> 3 (len of last item in range_len)
     """
-    # return len(str(list[-1]))  # this assumes the loongest item is the last in the last
+    # return len(str(list[-1]))  # this assumes the longest item is the last in the last
     len_longest = 0
     for item in lst:
         if len(str(item)) > len_longest:
@@ -230,7 +230,7 @@ def len_string_to_list_range(string):
 def string_of_int_to_list_of_ints(string_of_ints):
     """
     Convert a string of ints to a list of ints
-    string_of_ints: String. A series of intergers seperated by whitespace
+    string_of_ints: String. A series of integers separated by whitespace
     Ex. '53 6 12 98' --> [53, 6, 12, 98]
     """
     list_of_ints = findall('(\d+)', string_of_ints)  # ['53', '6', '12', '98']
@@ -238,7 +238,7 @@ def string_of_int_to_list_of_ints(string_of_ints):
     return list_of_ints
 
 
-def caeser_cypher(string='Hello World', offset='auto', char_set='default', shuffle_char_set=True, offset_length='auto', show_char_set=True, show_encrypt=True, show_decrypt=True, show_offset=True, no_print=False, verify_cypher_option=False, return_type='list'):
+def caesar_cypher(string='Hello World', offset='auto', char_set='default', shuffle_char_set=True, offset_length='auto', show_char_set=True, show_encrypt=True, show_decrypt=True, show_offset=True, no_print=False, verify_cypher_option=False, return_type='list'):
     """
     Lets the user run cypher interactively. Preferred method of using cypher()
     Any character that is not in the char_set will be encrypted as char_set[-1]
@@ -319,7 +319,7 @@ def caeser_cypher(string='Hello World', offset='auto', char_set='default', shuff
         return {'Character Set': char_set, 'Offset': offset, 'Encrypted String': encrypted_string}  # return a dictionary of required information to decrypt message
 
 
-def interactive_caeser_cypher():
+def interactive_caesar_cypher():
     greeting = """
 === Welcome to the Interactive Caesar Cypher ===
 
@@ -420,7 +420,7 @@ What kind of character set would you like to use?
 :""".format(chars_default))
 
             if user_char_set == '1':  # default set
-                user_char_set = 'default'  # TODO move char set back into caeser cypher, no need for it to be in global
+                user_char_set = 'default'  # TODO move char set back into caesar cypher, no need for it to be in global
             elif user_char_set == '2':  # build from input string
                 user_char_set = 'input'
             elif user_char_set == '3':  # user want to make own chars set. But at least those c in string have to be included
@@ -467,7 +467,7 @@ How long should the offset list be?
 Enter \'auto\' ( no quotes ) to be the full length of the input string ( this is the secure option )
 Or enter a number larger than 0.
 :""")
-                if user_offset_length == 'auto':  # generate a full length offset list  # TODO find out even though offset is generated here will caeser cypher generate one anyway because of 'auto'
+                if user_offset_length == 'auto':  # generate a full length offset list  # TODO find out even though offset is generated here will Caesar cypher generate one anyway because of 'auto'
                     user_offset = 'auto'
                 elif user_offset_length.isdigit():  # user entered a number, specified length
                     user_offset_length = int(user_offset_length)
@@ -482,7 +482,7 @@ Or enter a number larger than 0.
             # print('offset length', user_offset_length)
             # print('char set', user_char_set)
             # print('user_shuffle_char_set', user_shuffle_char_set)
-            caeser_cypher(string=user_string, offset=user_offset, offset_length=user_offset_length, char_set=user_char_set, shuffle_char_set=user_shuffle_char_set, verify_cypher_option=True)
+            caesar_cypher(string=user_string, offset=user_offset, offset_length=user_offset_length, char_set=user_char_set, shuffle_char_set=user_shuffle_char_set, verify_cypher_option=True)
 
         if user_choice == '2':
             print('=== Decrypt a String ===')
@@ -536,4 +536,4 @@ Example: "abcdefghijklmnopqrstuvwxyz 0123456789" ( no quotes )
             break
 
 
-interactive_caeser_cypher()
+interactive_caesar_cypher()
